@@ -1,6 +1,18 @@
 # CKAN Docker
 _El mismo CKAN de siempre pero.. bellamente dockerizado..._
 
+## Que es CKAN?
+
+Comprehensive Knowledge Archive Network (CKAN) es una aplicación web de código abierto para el almacenamiento y la distribución de los datos, tales como hojas de cálculo y los contenidos de las bases de datos. Está inspirado en las capacidades de gestión de paquetes comunes para abrir sistemas operativos, como Linux, y está destinado a ser el "apt-get de Debian para los datos"
+
+_fuente: [wikipedia](https://es.wikipedia.org/wiki/CKAN)_
+
+## Que es DOCKER?
+
+es un proyecto de código abierto que automatiza el despliegue de aplicaciones dentro de contenedores de software, proporcionando una capa adicional de abstracción y automatización de Virtualización a nivel de sistema operativo en Linux.
+_fuente: [wikipedia](https://es.wikipedia.org/wiki/Docker_(software))_
+
+
 ## Prerequisitos:
 
 ### DOCKER:
