@@ -18,7 +18,7 @@ Documentacion creada y testeada en **Trusty Tahr 14.04 de Ubuntu** y **Jessie 8.
 	echo "deb http://cz.archive.ubuntu.com/ubuntu trusty main" | sudo tee /etc/apt/sources.list
 	sudo apt-get update && sudo apt-get -y upgrade
 
-### Update the repository with the new addition and install docker-engine:
+### Update apt-get e install docker-engine:
 	sudo apt-get install --upgrade cgroup-lite cgroupfs-mount aufs-tools  libsystemd-journal0 && sudo apt-get update && sudo apt-get -q -y install docker-engine
 	sudo service docker start
 
@@ -37,4 +37,5 @@ Documentacion creada y testeada en **Trusty Tahr 14.04 de Ubuntu** y **Jessie 8.
 	sudo service docker restart
 	
 _Para mas informacion sobre estas distros de linux, por favor, visitar: [Ubuntu Trusty](http://releases.ubuntu.com/14.04/) y [Debian Jessie](https://www.debian.org/News/2015/20150426)_
+
 _Para conocer el proceso de instalacion en otras distros de Debian y/o Ubuntu o saber mas del proyecto **Docker**, por favor, viste el sitio Oficial de [Docker](http://docker.io)
