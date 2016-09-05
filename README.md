@@ -83,7 +83,7 @@ _Para instalar y ejecutar CKAN-Docker, debemos seguir los siguientes pasos:_
 
 
 
-_**Ubuntu-Debian Friends tricks!**
+_...**Ubuntu-Debian Friends tricks!**_
 
 _Si usas Ubuntu/Debian, tengo buenas noticias para vos, he aqui, una forma super rapida de tener CKAN funcionando en solo 2 sentencias de consola:_
 
