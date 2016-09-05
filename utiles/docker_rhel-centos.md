@@ -75,4 +75,5 @@ Unable to find image 'hello-world:latest' locally
  _deberia ver la misma salida que en **Paso 5**_
 
  _Para mas informacion sobre estas distros de linux, por favor, visitar: [RHEL 7](https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/7.0_Release_Notes/) y [CentOS 7](https://wiki.centos.org/)_
- _Para conocer el proceso de instalacion en otras distros de RHEL y/o CentOS o saber mas del proyecto **Docker**, por favor, viste el sitio Oficial de [Docker](http://docker.io)
+
+ _Para conocer el proceso de instalacion en otras distros de RHEL y/o CentOS o saber mas del proyecto **Docker**, por favor, viste el sitio Oficial de [Docker](http://docker.io)_
