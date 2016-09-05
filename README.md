@@ -62,7 +62,30 @@ _Descargar e Instalar desde:_
 		sudo port install git-core +svn +doc +bash_completion +gitweb
 
 
+
+
 ## Instalacion y Ejecucion de CKAN
+_Para instalar y ejecutar CKAN-Docker, debemos seguir los siguientes pasos:_
+
++ Paso 1: Clonar Repositorio. _Es recomendable clonar el repo dentro de /tmp, dado que al finalizar la instalacion, no usaremos mas el repositorio_.
+		
+		$ cd /tmp
+		$ git clone https://github.com/JoseSalgado1024/ckan_in_docker.git
+
++ Paso 2: _construir el contenedor de **ckan** usando el Dockerfile._
+		
+		$ cd ckan_in_docker/
+		$ docker build -t jsalgadowk/ckan:latest .
+
++ Paso 3: _Correr contenedor  de **CKAN**_
+		
+		$ docker run -d --link db:db --link solr:solr -p 5000:5000 jsalgadowk/ckan:latest
+
+
+
+_**Ubuntu-Debian Friends tricks!**
+
+_Si usas Ubuntu/Debian, tengo buenas noticias para vos, he aqui, una forma super rapida de tener CKAN funcionando en solo 2 sentencias de consola:_
 
 	sudo su -c "cd /tmp && git clone https://github.com/JoseSalgado1024/ckan_in_docker.git && cd /tmp/ckan_in_docker && docker build -t jsalgadowk/ckan:latest ."
 	sudo su -c "docker run -d --link db:db --link solr:solr -p 5000:5000 jsalgadowk/ckan:latest"
