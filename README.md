@@ -84,6 +84,10 @@ _Para instalar y ejecutar CKAN-Docker, debemos seguir los siguientes pasos:_
 
 Al finalizar, y para corrovorar que todo esta funcionando perfectamente, chequear [ckan_local](http://localhost:5000).
 
+#
+#
+#
+#
 
 _...**Ubuntu-Debian Friends tricks!**_
 
