@@ -31,7 +31,7 @@ _Vamos a requerir dos contenedores extras, ambos pertenecen al dockerHub Oficial
 ### GIT TOOLs:
 	
 + Windows:
-_Desacrgar e Instalar desde:_
+_Descargar e Instalar desde:_
 
 		https://github.com/git-for-windows/git/releases/tag/v2.10.0.windows.1
 
@@ -52,3 +52,7 @@ _Desacrgar e Instalar desde:_
 
 ## Instalacion y Ejecucion de CKAN
 
+	sudo su -c "cd /tmp && git clone https://github.com/JoseSalgado1024/ckan_in_docker.git && cd /tmp/ckan_in_docker && docker build -t jsalgadowk/ckan:latest ."
+	sudo su -c "docker run -d jsalgadowk/ckan:latest --link db:db --link -p 5000:5000 solr:solr jsalgadowk/ckan:latest"
+
+Al finalizar, y para corrovorar que todo esta funcionando perfectamente, chequear [ckan_local](http://localhost:5000).
