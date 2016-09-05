@@ -5,13 +5,13 @@ _El mismo CKAN de siempre pero.. bellamente dockerizado..._
 
 ### DOCKER:
 
-+ Docker para [OSX](https://github.com/JoseSalgado1024/ckan_in_docker/blob/master/utiles/docker_osx.md).
++ Docker para [OSX](https://docs.docker.com/docker-for-mac).
 
 + Docker para [Ubuntu/Debian](https://github.com/JoseSalgado1024/ckan_in_docker/blob/master/utiles/docker_Ubuntu-Debian.md).
 
 + Docker para [RHEL/CentOS](https://github.com/JoseSalgado1024/ckan_in_docker/blob/master/utiles/docker_rhel-centos.md).
 
-+ Docker para [Windows](https://github.com/JoseSalgado1024/ckan_in_docker/blob/master/utiles/docker_windows.md).
++ Docker para [Windows](https://docs.docker.com/engine/installation/windows).
 
 
 ### DOCKER IMGs:
