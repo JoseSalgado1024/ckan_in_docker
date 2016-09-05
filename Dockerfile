@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 MAINTAINER Jose A. Salagdo<jose.salgado.wrk@gmail.com>
 
 # Actualizamos las bases de apt-get!
-RUN apt-get -q -y update 
+RUN apt-get -qq -y update 
 
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository universe
