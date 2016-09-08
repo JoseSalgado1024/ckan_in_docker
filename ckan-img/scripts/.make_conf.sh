@@ -10,7 +10,7 @@
 
 set -eu
 
-CONFIG="${CKAN_CONFIG}/${CKAN_DEV_CONFIG_FILE}"
+CONFIG="${CKAN_CONFIG}/${CKAN_CONFIG_FILE}"
 
 abort () {
   echo "$@" >&2
@@ -18,7 +18,7 @@ abort () {
 }
 
 write_config () {
-  echo "Creando configuracion para: ${CKAN_CONFIG}/${CKAN_DEV_CONFIG_FILE}"
+  echo "Creando configuracion para: ${CKAN_CONFIG}/${CKAN_CONFIG_FILE}"
   "$CKAN_HOME"/bin/paster make-config ckan "$CONFIG"
 
   "$CKAN_HOME"/bin/paster --plugin=ckan config-tool "$CONFIG" -e \
