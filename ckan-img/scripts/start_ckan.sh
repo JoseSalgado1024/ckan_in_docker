@@ -10,7 +10,7 @@ if [ "$exit_code" -eq "0" ] ; then
 	service apache2 start
 	service apache2 reload
 	service nginx restart
-	# $CKAN_HOME/bin/paster serve "${CKAN_CONFIG}/${CKAN_CONFIG_FILE}" &
+	$CKAN_HOME/bin/paster serve "${CKAN_CONFIG}/${CKAN_CONFIG_FILE}" &
 	# $CKAN_HOME/bin/
 else
 	echo "Fallo inicio de CKAN" 

@@ -56,6 +56,7 @@ RUN $CKAN_HOME/bin/pip install -e "git+https://github.com/datagovuk/ckanext-hier
 # COPY ./requirements/apache.wsgi $CKAN_CONFIG/apache.wsgi
 ADD ./requirements/ckan_default.conf /etc/apache2/sites-enabled/ckan_default.conf 
 ADD ./scripts $CKAN_INIT
+ADD ./requirements/apache.wsgi $CKAN_CONFIG/apache.wsgi
 RUN chmod +x -R $CKAN_INIT/
 RUN chmod 777 -R $CKAN_CONFIG
 
