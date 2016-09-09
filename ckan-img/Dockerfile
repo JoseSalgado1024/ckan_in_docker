@@ -9,7 +9,7 @@ RUN add-apt-repository universe
 RUN apt-get update
 
 # Instalamos la Herramientas que vamos a requerir
-RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
+RUN DEBIAN_FRONTEND=noninteractive apt-get -qqy install \
             libevent-dev \
             libpq-dev \
             nginx \
@@ -57,7 +57,6 @@ COPY ./requirements/apache.wsgi $CKAN_CONFIG/apache.wsgi
 ADD ./requirements/ckan_default.conf /etc/apache2/sites-enabled/ckan_default.conf 
 ADD ./scripts $CKAN_INIT
 RUN chmod +x $CKAN_INIT/*.sh
-# RUN echo "127.0.0.1       ckan" >> /etc/hosts
 RUN chmod 777 -R $CKAN_CONFIG
 
 EXPOSE $CKAN_APACHE2_PORT
@@ -69,13 +68,3 @@ CMD ["/etc/ckan_init.d/start_ckan.sh"]
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 
-
-#127.0.0.1       localhost
-#::1     localhost ip6-localhost ip6-loopback
-#fe00::0 ip6-localnet
-#ff00::0 ip6-mcastprefix
-#ff02::1 ip6-allnodes
-#ff02::2 ip6-allrouters
-#172.17.0.3      db 07393f0f29d4
-#172.17.0.2      solr eaf558f7ce01
-#172.17.0.4      507b24a90e80
