@@ -98,15 +98,29 @@ _Para instalar y ejecutar CKAN-Docker, debemos seguir los siguientes pasos:_
 
 Al finalizar, y para corroborar que todo esta funcionando perfectamente, chequear [ckan_local](http://localhost).
 
-#
-#
-#
-#
+--- 
 
-_...**Ubuntu-Debian Friends tricks!**_
+## Si..., todo bien.. pero sigo pensando que es dificil...
 
-_Si usas Ubuntu/Debian, tengo buenas noticias para vos, he aqui, una forma super rapida de tener CKAN funcionando en solo 2 sentencias de consola:_
+_La idea detras de esta implementacion de CKAN, es que **SOLO** te encargagues de tus datos, nada mas, por tanto, dependiendo de que OS usas, podes seleccionar un script de auto-deploy!_
 
-	sudo su -c "cd /tmp && git clone https://github.com/JoseSalgado1024/ckan_in_docker.git && cd /tmp/ckan_in_docker && docker build -t jsalgadowk/ckan:latest ."
-	sudo su -c "docker run -d --link db:db --link solr:solr -p 5000:5000 jsalgadowk/ckan:latest"
+
+_(...Si, la vida es dulce!...)_
+
++ Ubuntu|Debian:
+
+	sudo su -c "cd /tmp && git clone https://github.com/JoseSalgado1024/ckan_in_docker.git && cd /tmp/ckan_in_docker/ubunut-debian_auto-deploy.sh"
+
++ RHEL|CentOS:
+
+	sudo su -c "cd /tmp && git clone https://github.com/JoseSalgado1024/ckan_in_docker.git && cd /tmp/ckan_in_docker/rhel-centos_auto-deploy.sh"
+
++ Windows:
+	
+	# Oops! ...No esta listo aun!...
+
++ OSX:
+	
+	# Oops! ...No esta listo aun!...
+
 
