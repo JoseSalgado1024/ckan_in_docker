@@ -21,8 +21,12 @@ if [ "$exit_code" -eq "0" ] ; then
 	# Si esta corriendo, detenemos Apache & NginX
 	service apache2 stop && service nginx stop;
 	service apache2 start && service apache2 reload && service nginx restart;
-	# Funcion tonta que evita la finalizacion del script y a su vez, que docker termine el contenedor.
+	# Sentencia tonta que evita la finalizacion del script y a su vez, que docker termine el contenedor.
 	while true; do sleep 1000; done
 else
-	echo "Fallo inicio de CKAN" 
+	echo "-------------------------------------------"
+	echo ""
+	echo "  Ooops! hubo un problema.. :( " 
+	echo ""
+	echo "-------------------------------------------"
 fi
