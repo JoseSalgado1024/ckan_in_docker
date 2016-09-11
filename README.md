@@ -15,13 +15,15 @@ _fuente: [wikipedia](https://es.wikipedia.org/wiki/Docker_(software))_
 ## Con que cuenta esta version de CKAN?
 
 Features:
-+ CKAN 2.6
-+ Datastore
-+ Datapusher
-+ WSGI
+
++ CKAN 2.6.
++ Datastore.
++ Datapusher.
++ WSGI.
 + Extensiones:
 	+ CKAN-Hierarchy. Mas informacion [aqui](https://github.com/datagovuk/ckanext-hierarchy)
 	+ CKAN-GobArTheme. Ver [Demo](http://http://datos.gob.ar/). Mas Informacion [aqui](https://github.com/gobabiertoAR/datos.gob.ar/blob/master/docs/03_instalacion_tema_visual.md)
++ Ckan-tools
 
 
 ## Prerequisitos:
@@ -62,18 +64,6 @@ _Descargar e Instalar desde:_
 
 
 ## Instalacion y Ejecucion de CKAN
-_Vamos a requerir dos contenedores extras, ambos _Dockerfiles_ se encuentran dentro al dockerHub Oficial de CKAN. Para mas informacion, visitar [esta](https://hub.docker.com/u/ckan/) pagina._
-
-+ CKAN DB _[+info](https://hub.docker.com/r/ckan/postgresql/)_:
-
-		docker run -d  --name db ckan/postgresql 	
-
-
-+ CKAN SOLR _[+info](https://hub.docker.com/r/ckan/solr/)_:
-
-		docker run -d  --name solr ckan/solr 	
-
-
 _Para instalar y ejecutar CKAN-Docker, debemos seguir los siguientes pasos:_
 
 + Paso 1: Clonar Repositorio. _Es recomendable clonar el repo dentro de /tmp (o C:\temp en **Windows X**), dado que al finalizar la instalacion, no usaremos mas el repositorio_.
