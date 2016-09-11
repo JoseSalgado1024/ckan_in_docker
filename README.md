@@ -81,7 +81,7 @@ _Para instalar y ejecutar CKAN-Docker, debemos seguir los siguientes pasos:_
 		$ cd /tmp # en Linux, en Windows, usar cd C:\temp
 		$ git clone https://github.com/JoseSalgado1024/ckan_in_docker.git
 
-+ Paso 2: _construir y lanzar el contenedor de **PostgreSQL** usando el Dockerfile hubicado en **postgresql-img/**._
++ Paso 2: _construir y lanzar el contenedor de **PostgreSQL** usando el Dockerfile hubicado en **postgresql-img/**._ 
 
 		$ cd ckan_in_docker/postgresql-img/
 		$ docker build -t jsalgadowk/postgresql:latest .
@@ -95,7 +95,7 @@ _Para instalar y ejecutar CKAN-Docker, debemos seguir los siguientes pasos:_
 		$ docker build -t jsalgadowk/solr:latest .
 		$ docker run -d  --name solr jsalgadowk/solr:latest
 
-+ Paso 4: _construir el contenedor de **ckan** usando el Dockerfile._
++ Paso 4: _construir el contenedor de **ckan** usando el Dockerfile hubicado en ckan-img/._
 
 		# Salimos una carpeta hacia atras mediante cd ..
 		$ cd ckan_in_docker/
@@ -106,7 +106,7 @@ _Para instalar y ejecutar CKAN-Docker, debemos seguir los siguientes pasos:_
 		$ docker run -d --link db:db --link solr:solr -p 80:80 jsalgadowk/ckan:latest
 
 
-Al finalizar, y para corrovorar que todo esta funcionando perfectamente, chequear [ckan_local](http://localhost).
+Al finalizar, y para corroborar que todo esta funcionando perfectamente, chequear [ckan_local](http://localhost).
 
 #
 #
