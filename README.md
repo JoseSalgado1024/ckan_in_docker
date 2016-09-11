@@ -100,12 +100,9 @@ Al finalizar, y para corroborar que todo esta funcionando perfectamente, chequea
 
 --- 
 
-## Si..., todo bien.. pero sigo pensando que es dificil...
+#### Si..., todo bien.. pero sigo pensando que es muy dificil...
 
 _La idea detras de esta implementacion de CKAN, es que **SOLO** te encargagues de tus datos, nada mas, por tanto, dependiendo de que OS usas, podes seleccionar un script de auto-deploy!_
-
-
-_(...Si, la vida es dulce!...)_
 
 + Ubuntu|Debian:
 
@@ -117,7 +114,7 @@ _(...Si, la vida es dulce!...)_
 
 + Windows:
 	
-	# Oops! ...No esta listo aun!...
+	Oops! ...No esta listo aun!...
 
 + OSX:
 	
