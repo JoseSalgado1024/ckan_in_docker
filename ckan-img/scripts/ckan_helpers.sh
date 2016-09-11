@@ -1,6 +1,5 @@
 
 #!/bin/bash
-# ec2-52-203-114-238.compute-1.amazonaws.com
 
 : ${DATABASE_URL:=}
 : ${SOLR_URL:=}
@@ -15,8 +14,8 @@ abort() {
   exit 1
 }
 
-write_config() {
-  echo "Creando configuracion para: ${CKAN_CONFIG}/${CKAN_DEV_CONFIG_FILE}"
+write_config () {
+  echo "Creando configuracion para: ${CKAN_CONFIG}/${CKAN_CONFIG_FILE}"
   "$CKAN_HOME"/bin/paster make-config ckan "$CONFIG"
 
   "$CKAN_HOME"/bin/paster --plugin=ckan config-tool "$CONFIG" -e \

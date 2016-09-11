@@ -12,6 +12,17 @@ _fuente: [wikipedia](https://es.wikipedia.org/wiki/CKAN)_
 es un proyecto de código abierto que automatiza el despliegue de aplicaciones dentro de contenedores de software, proporcionando una capa adicional de abstracción y automatización de Virtualización a nivel de sistema operativo en Linux.
 _fuente: [wikipedia](https://es.wikipedia.org/wiki/Docker_(software))_
 
+## Con que cuenta esta version de CKAN?
+
+Features:
++ CKAN 2.6
++ Datastore
++ Datapusher
++ WSGI
++ Extenciones:
+	+ CKAN-Hierarchy. Mas informacion [aqui](https://github.com/datagovuk/ckanext-hierarchy)
+	+ CKAN-GobArTheme. Ver [Demo](http://http://datos.gob.ar/). Mas Informacion [aqui](https://github.com/gobabiertoAR/datos.gob.ar/blob/master/docs/03_instalacion_tema_visual.md)
+
 
 ## Prerequisitos:
 
@@ -79,7 +90,7 @@ _Para instalar y ejecutar CKAN-Docker, debemos seguir los siguientes pasos:_
 
 + Paso 3: _Correr contenedor  de **CKAN**_
 		
-		$ docker run -d --link db:db --link solr:solr -p 5000:5000 jsalgadowk/ckan:latest
+		$ docker run -d --link db:db --link solr:solr -p 80:80 jsalgadowk/ckan:latest
 
 
 Al finalizar, y para corrovorar que todo esta funcionando perfectamente, chequear [ckan_local](http://localhost:5000).
