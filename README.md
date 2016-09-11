@@ -118,6 +118,6 @@ _La idea detras de esta implementacion de CKAN, es que **SOLO** te encargagues d
 
 + OSX:
 	
-	# Oops! ...No esta listo aun!...
+	Oops! ...No esta listo aun!...
 
 
