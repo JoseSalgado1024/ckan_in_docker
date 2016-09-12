@@ -1,11 +1,5 @@
 #!/bin/bash
 
-install_git (){
-	sudo su -c "apt-get update && apt-get install -y curl-devel expat-devel gettext-devel openssl-devel zlib-devel"
-	sudo su -c "apt-get -y install git-core"
-}
-
-
 install_docker (){
 	### Paso 1 UPDATE & UPGRADE
 	sudo su -c "apt-get -qqy update && apt-get -qqy upgrade"
@@ -90,18 +84,6 @@ deploy_portal (){
 	echo "Enjoy! :D"
 
 }
-
-# Estan las herramientas de github insaladas?
-if [ $(dpkg-query -W -f='${Status}' "git-core" 2>/dev/null | grep -c "ok installed") -eq 0 ];
-then
-	echo ""
-	echo "++----------------------------------------------+";
-	echo "|                                               |";
-	echo "|                INSTALANDO GIT                 |";
-	echo "|                                               |";
-	echo "+-----------------------------------------------+";
-	echo "install_git"
-fi
 
 # Esta docker insalado?	
 if [ $(dpkg-query -W -f='${Status}' docker-engine 2>/dev/null | grep -c "ok installed") -eq 0 ];
