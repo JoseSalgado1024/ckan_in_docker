@@ -13,7 +13,7 @@ mconf=$?
 # Inicializamos la Base de datos e incluso, Solr.
 eval "/bin/bash $CKAN_INIT/.init_db.sh"
 idb=$?
-exit_code=$(mconf+idb)
+exit_code=$(($mconf + $idb))
 # Ambos commandos anteriores, fueron exitosos?
 if [ "$exit_code" -eq "0" ] ; then
 	
