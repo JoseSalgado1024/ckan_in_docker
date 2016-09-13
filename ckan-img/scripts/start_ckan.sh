@@ -14,6 +14,7 @@ mconf=$?
 eval "/bin/bash $CKAN_INIT/.init_db.sh"
 idb=$?
 exit_code=$(($mconf + $idb))
+
 # Ambos commandos anteriores, fueron exitosos?
 if [ "$exit_code" -eq "0" ] ; then
 	
@@ -24,6 +25,9 @@ if [ "$exit_code" -eq "0" ] ; then
 	service apache2 stop && service nginx stop;
 	service apache2 start && service apache2 reload && service nginx restart;
 	
+	# Agrego herramientas para simplificar el uso de CKAN
+	source $CKAN_INIT/ckan_helpers.sh
+
 	# Sentencia tonta que evita la finalizacion del script y a su vez, que docker termine el contenedor.
 	while true; do sleep 1000; done
 else
