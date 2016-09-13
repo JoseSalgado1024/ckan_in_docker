@@ -6,6 +6,11 @@
 #  correctamente. 
 # ----------------------------------------------------- #
 
+# Volvamos bella la instancia de /bin/bash
+pretty_bash (){
+
+}
+
 
 # Creamos contexto para CKAN
 eval "/bin/bash $CKAN_INIT/.make_conf.sh"
@@ -31,6 +36,7 @@ if [ "$exit_code" -eq "0" ] ; then
 	# Sentencia tonta que evita la finalizacion del script y a su vez, que docker termine el contenedor.
 	while true; do sleep 1000; done
 else
+	# Ok.. el mundo ya no es un lugar amigable!
 	echo "-------------------------------------------"
 	echo ""
 	echo "  Ooops! hubo un problema.. :( " 

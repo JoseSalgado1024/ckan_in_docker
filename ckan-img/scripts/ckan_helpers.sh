@@ -84,10 +84,17 @@ link_solr_url() {
 #                                   #
 #####################################
 
+ckan_ayuda(){
+	printf "ALGO! x1"
+	printf "ALGO! x2"
+	printf "ALGO! x3"
+	printf "ALGO! x4"
+	printf "ALGO! x5"
+}
+
 # Listar usuarios todos de CKAN
 ckan_list_users (){
 	"$CKAN_PASTER" --plugin=ckan user list -c "$CONFIG"
-
 }
 
 

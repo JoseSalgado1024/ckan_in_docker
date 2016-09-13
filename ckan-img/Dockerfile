@@ -18,7 +18,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qqy install \
             postfix \
             build-essential \
             python-dev \
-            python-minimal \
             python-virtualenv \
             python-pip \
             wget \
@@ -28,11 +27,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qqy install \
             git-core
 
 # Crearemos algunas variables de entorno, que nos seran utiles mas tarde
-ENV CKAN_DEFAULT_PORT 5000
 ENV CKAN_APACHE2_PORT 80
 ENV CKAN_CONFIG_FILE development.ini
 ENV HOME /root
-ENV CKAN_VERSION 2.5.1  
+ENV CKAN_VERSION 2.5  
+ENV CKAN_SITE_URL localhost 
+ENV CKAN_LOCAL es
 ENV CKAN_HOME /usr/lib/ckan/default
 ENV CKAN_CONFIG /etc/ckan/default
 ENV CKAN_DATA /var/lib/ckan
@@ -53,16 +53,23 @@ RUN dpkg -i /tmp/python-ckan_2.5-trusty_amd64.deb
 RUN $CKAN_HOME/bin/pip install -e "git+https://github.com/gobabiertoAR/datos.gob.ar.git#egg=ckanext-gobar_theme"
 RUN $CKAN_HOME/bin/pip install -e "git+https://github.com/datagovuk/ckanext-hierarchy.git#egg=ckanext-hierarchy"
 
-# COPY ./requirements/apache.wsgi $CKAN_CONFIG/apache.wsgi
+# Configuramos WSGI & CKANInit
 ADD ./requirements/ckan_default.conf /etc/apache2/sites-enabled/ckan_default.conf 
 ADD ./scripts $CKAN_INIT
 ADD ./requirements/apache.wsgi $CKAN_CONFIG/apache.wsgi
 RUN chmod +x -R $CKAN_INIT/
 RUN chmod 777 -R $CKAN_CONFIG
 
-EXPOSE $CKAN_APACHE2_PORT
-EXPOSE $CKAN_DEFAULT_PORT
+# Creamos volumenes con el area de Configuracion y Data de CKAN.
+# Configs...
+VOLUME [$CKAN_CONFIG]
+# Data...
+VOLUME [$CKAN_DATA]
 
+# Abrimos el puerto $CKAN_APACHE2_PORT, por omision, el 80. 
+EXPOSE $CKAN_APACHE2_PORT
+
+# Instruccion que se ejecutara al hacer "docker run -d [container-tag]"
 CMD ["/etc/ckan_init.d/start_ckan.sh"]
 
 # OK, Limpiamos y nos vamos

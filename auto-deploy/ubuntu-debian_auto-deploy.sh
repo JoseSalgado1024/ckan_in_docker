@@ -1,5 +1,44 @@
 #!/bin/bash
 
+# Colores de Fuentes
+FBLACK="\033[30;"
+FRED="\033[31;"
+FGREEN="\033[32;"
+FYELLOW="\033[33;"
+FBLUE="\033[34;"
+FPURPLE="\033[35;"
+D_FGREEN="\033[6;"
+FWHITE="\033[7;"
+FCYAN="\x1b[36m"
+
+DHUB_USER="jsalgadowk"
+CKAN_DI="ckan"
+PG_DI="pg-ckan"
+SOLR_DI="solr"
+
+
+# Fiendy Docker functions! :D
+# Pull all containers [pg-ckan, ckan, solr]
+docker_pull_all_containers(){
+	print ""
+	echo $CKAN_DI, $PG_DI, $SOLR_DI | xargs -n 1 | while read img; do echo "docker pull $DHUB_USER/$img:latest"; done
+}
+
+docker_containers_delete_all (){
+	print ""
+	docker rm $(docker ps -a -q)
+}
+
+docker_stop_all (){
+	print ""
+	docker stop $(docker ps -a -q)
+}
+
+docker_imgs_delete_all (){
+	print ""
+	docker rmi $(docker images -q)
+}
+
 install_docker (){
 	### Paso 1 UPDATE & UPGRADE
 	sudo su -c "apt-get -qqy update && apt-get -qqy upgrade"
@@ -35,54 +74,15 @@ start_ckan-docker (){
 	echo "++----------------------------------------------+";
   	echo "|         INICIANDO PORTAL CKAN-DOCKER          |";
   	echo "+-----------------------------------------------+";
-  	echo "docker run -d --link db:db --link solr:solr -p 80:80 jsalgadowk/ckan:latest"
+  	echo "docker run -d --link db:db --link solr:solr -p 80:80 $DHUB_USER/$CKAN_DI:latest"
 
-}
-
-
-deploy_postgresql (){
-	echo "++----------------------------------------------+";
-  	echo "|             INSTALANDO POSTGRESQL             |";
-  	echo "+-----------------------------------------------+";
-  	echo "cd ckan_in_docker/postgresql-img/"
-	echo "docker build -t jsalgadowk/postgresql:latest ."
-	echo "docker run -d  --name db jsalgadowk/postgresql:latest"
-}
-
-deploy_solr (){
-	echo "-------------------------------------------------";
-  	echo "|               INSTALANDO SOLR                 |";
-  	echo "-------------------------------------------------";
-  	echo "cd ckan_in_docker/sorl-img/"
-	echo "docker build -t jsalgadowk/sorl:latest ."
-	echo "docker run -d  --name sorl jsalgadowk/sorl:latest"
-}
-
-deploy_ckan (){
-	echo ""
-	echo "++----------------------------------------------+";
-	echo "|               INSTALANDO CKAN                 |";
-	echo "+-----------------------------------------------+";
-	echo "cd ckan_in_docker/ckan-img/"
-	echo "docker build -t jsalgadowk/ckan:latest ."
 }
 
 deploy_portal (){
-	echo ""
-	echo "++----------------------------------------------+";
-	echo "|                                               |";
-	echo "|               INSTALANDO PORTAL               |";
-	echo "|                                               |";
-	echo "+-----------------------------------------------+";  
-	deploy_postgresql
-	sleep 1
-	deploy_solr
-	sleep 1
-	deploy_ckan
-	sleep 1
-	start_ckan-docker
-	echo "Enjoy! :D"
-
+	# Paso 1: Descargo todos lo contenedores necesarios.
+	docker_pull_all_containers
+	
+	# Paso 2: 
 }
 
 # Esta docker insalado?	

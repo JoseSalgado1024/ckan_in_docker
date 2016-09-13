@@ -3,6 +3,7 @@ MAINTAINER Jose A. Salgado<jose.salgado.wrk@gmail.com>
 
 # Variables de Entorno
 ENV SOLR_CORE ckan
+ENV SOLR_PORT 8983
 
 # User
 USER root
@@ -27,3 +28,5 @@ ADD ./requiere/schema.xml /etc/solr/conf/schema.xml
 
 # Correccion de permisos para Solr
 RUN chown -R $SOLR_USER:$SOLR_USER /opt/solr/server/solr/$SOLR_CORE
+
+EXPOSE $SOLR_PORT
