@@ -30,8 +30,14 @@ write_config () {
       "ckan.auth.create_user_via_web = false" \
       "ckan.locale_default = es" \
       "email_to = disabled@example.com" \
+      "ckan.max_resource_size = 200" \
+      "ckan.max_image_size = 10" \
+      "ckan.datapusher.formats = csv xls xlsx tsv application/csv application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" \
+      "ckan.datapusher.url = http://127.0.0.1" \
       "error_email_from = ckan@$(hostname -f)" \
-      "ckan.site_url = http://172.17.0.4"
+      "ckan.datastore.write_url = postgresql://ckan_default:pass@localhost/datastore_default" \
+      "ckan.datastore.read_url = postgresql://datastore_default:pass@localhost/datastore_default" \
+      "ckan.site_url = http://127.0.0.1"
       
 
   if [ -n "$ERROR_EMAIL" ]; then

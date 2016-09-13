@@ -1,27 +1,29 @@
-FROM eccenca/baseimage:1.0.1
-MAINTAINER Jose A. Salagdo<jose.salgado.wrk@gmail.com>
+FROM solr:6.0
+MAINTAINER Open Knowledge
 
-RUN apt-get install -y software-properties-common
-RUN add-apt-repository universe
-RUN apt-get update
+# Enviroment
+ENV SOLR_CORE ckan
 
-RUN DEBIAN_FRONTEND=noninteractive=apt-get -qqy update && apt-get -q -y install default-jre-headless
+# User
+USER root
 
-ENV SOLR_HOME /opt/solr/example/solr
-ENV SOLR_VERSION 4.10.4
-ENV SOLR solr-$SOLR_VERSION
-ENV CKAN_VERSION 2.2.3
+# Create Directories
+RUN mkdir -p /opt/solr/server/solr/$SOLR_CORE/conf
+RUN mkdir -p /opt/solr/server/solr/$SOLR_CORE/data
 
-RUN mkdir -p /opt/solr
-ADD ./requirements/schema.xml /opt/solr/schema.xml
-# ADD http://ftp-stud.hs-esslingen.de/pub/Mirrors/ftp.apache.org/dist/lucene/solr/$SOLR_VERSION/$SOLR.tgz /opt/$SOLR.tgz
-#RUN tar zxf /opt/$SOLR.tgz -C /opt/solr --strip-components 1
+# Adding Files
+ADD ./requiere/solrconfig.xml \
+https://raw.githubusercontent.com/ckan/ckan/ckan-2.5.2/ckan/config/solr/schema.xml \
+https://raw.githubusercontent.com/apache/lucene-solr/releases/lucene-solr/6.0.0/solr/server/solr/configsets/basic_configs/conf/currency.xml \
+https://raw.githubusercontent.com/apache/lucene-solr/releases/lucene-solr/6.0.0/solr/server/solr/configsets/basic_configs/conf/synonyms.txt \
+https://raw.githubusercontent.com/apache/lucene-solr/releases/lucene-solr/6.0.0/solr/server/solr/configsets/basic_configs/conf/stopwords.txt \
+https://raw.githubusercontent.com/apache/lucene-solr/releases/lucene-solr/6.0.0/solr/server/solr/configsets/basic_configs/conf/protwords.txt \
+https://raw.githubusercontent.com/apache/lucene-solr/releases/lucene-solr/6.0.0/solr/server/solr/configsets/data_driven_schema_configs/conf/elevate.xml \
+/opt/solr/server/solr/$SOLR_CORE/conf/
 
-RUN cp -R $SOLR_HOME/collection1/ $SOLR_HOME/ckan/
-RUN echo name=ckan > $SOLR_HOME/ckan/core.properties
+# Create Core.properties
+RUN echo name=$SOLR_CORE > /opt/solr/server/solr/$SOLR_CORE/core.properties
+ADD ./requiere/schema.xml /etc/solr/conf/schema.xml
 
-ADD https://github.com/ckan/ckan/raw/ckan-$CKAN_VERSION/ckan/config/solr/schema.xml $SOLR_HOME/ckan/conf/schema.xml
-
-EXPOSE 8983
-WORKDIR /opt/solr/example
-CMD ["java", "-jar", "start.jar"]
+# Giving ownership to Solr
+RUN chown -R $SOLR_USER:$SOLR_USER /opt/solr/server/solr/$SOLR_CORE
