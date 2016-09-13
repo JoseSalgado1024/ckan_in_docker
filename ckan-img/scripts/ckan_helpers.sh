@@ -7,7 +7,32 @@
 
 set -eu
 
-CONFIG="${CKAN_CONFIG}/${CKAN_DEV_CONFIG_FILE}"
+CKAN_PASTER=$CKAN_HOME/bin/paster
+CKAN_PIP=$CKAN_HOME/bin/pip 
+
+# fonts color
+FBLACK="\033[30;"
+FRED="\033[31;"
+FGREEN="\033[32;"
+FYELLOW="\033[33;"
+FBLUE="\033[34;"
+FPURPLE="\033[35;"
+D_FGREEN="\033[6;"
+FWHITE="\033[7;"
+FCYAN="\x1b[36m"
+
+# background color
+BBLACK="40m"
+BRED="41m"
+BGREEN="42m"
+BYELLOW="43m"
+BBLUE="44m"
+BPURPLE="45m"
+D_BGREEN="46m"
+BWHITE="47m"
+
+# Configuracion actual [/etc/ckan/default/nombre.ini]
+CONFIG="${CKAN_CONFIG}/${CKAN_CONFIG_FILE}"
 
 abort() {
   echo "$@" >&2
@@ -18,7 +43,7 @@ write_config () {
   echo "Creando configuracion para: ${CKAN_CONFIG}/${CKAN_CONFIG_FILE}"
   "$CKAN_HOME"/bin/paster make-config ckan "$CONFIG"
 
-  "$CKAN_HOME"/bin/paster --plugin=ckan config-tool "$CONFIG" -e \
+  "$CKAN_PASTER" --plugin=ckan config-tool "$CONFIG" -e \
       "sqlalchemy.url = ${DATABASE_URL}" \
       "solr_url = ${SOLR_URL}" \
       "ckan.storage_path = /var/lib/ckan" \
@@ -51,25 +76,40 @@ link_solr_url() {
   echo "http://${host}:${port}/solr/ckan"
 }
 
-#
-ckan_init_db(){
-	"$CKAN_HOME"/bin/paster --plugin=ckan db init -c "${CKAN_CONFIG}/${CKAN_DEV_CONFIG_FILE}"
-	if [ "$?" -gt "0" ]; then
-		abort " Fallo Inicializacion de DB"		
-	fi
+
+
+#####################################
+#                                   #
+#        ADMIN CKAN FUNCTIONS!      #
+#                                   #
+#####################################
+
+# Listar usuarios todos de CKAN
+ckan_list_users (){
+	"$CKAN_PASTER" --plugin=ckan user list -c "$CONFIG"
+
 }
 
-# 
+
+# Crear usuario admin de CKAN!
 ckan_add_admin(){
 	ADMIN_NAME="ckan_admin"
 	if [ "$#" -gt "0" ]; then
 		ADMIN_NAME=$1
 	fi
 	# mkconfig
-	"$CKAN_HOME"/bin/paster --plugin=ckan sysadmin add $ADMIN_NAME -c "${CKAN_CONFIG}/${CKAN_DEV_CONFIG_FILE}"
+	"$CKAN_PASTER" --plugin=ckan sysadmin add $ADMIN_NAME -c "$CONFIG"
 	if [ "$#" -gt "0" ]; then
 		abort "ERR_MSG"
 	fi 
+}
+
+# Inicializar la base de datos "Default"
+ckan_init_db(){
+	"$CKAN_PASTER" --plugin=ckan db init -c "$CONFIG"
+	if [ "$?" -gt "0" ]; then
+		abort "Fallo Inicializacion de DB :("		
+	fi
 }
 
 #
@@ -93,9 +133,9 @@ ckan_build_context(){
 	fi
 }
 
-install_tools(){
+fooTest(){
 	echo "friendly-ckan tools instaladas!"
 	#source /etc/ckan_init.d/ckan_helpers.sh
 } 
 
-install_tools
+fooTest
