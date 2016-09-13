@@ -74,15 +74,17 @@ start_ckan-docker (){
 	echo "++----------------------------------------------+";
   	echo "|         INICIANDO PORTAL CKAN-DOCKER          |";
   	echo "+-----------------------------------------------+";
-  	echo "docker run -d --link db:db --link solr:solr -p 80:80 $DHUB_USER/$CKAN_DI:latest"
+  	echo $PG_DI, $SOLR_DI | xargs -n 1 | while read img; do echo "docker run -d  --name $img $DHUB_USER/$img"; done
+  	echo "docker run -d --link $PG_DI:db --link $SOLR_DI:solr -p 80:80 $DHUB_USER/$CKAN_DI:latest"
 
 }
+
 
 deploy_portal (){
 	# Paso 1: Descargo todos lo contenedores necesarios.
 	docker_pull_all_containers
-	
-	# Paso 2: 
+	# Paso 2: Run CKAN!
+	start_ckan-docker 
 }
 
 # Esta docker insalado?	
