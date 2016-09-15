@@ -13,4 +13,7 @@ then
 	# No? no importa, lo instalamos! :D
 	install_docker_debian
 fi
+# Instalemos CKAN! :D
 deploy_portal
+# OK! veamos como quedo tu portal! :D
+firefox 'http://localhost' &
