@@ -44,17 +44,17 @@ write_config () {
   "$CKAN_HOME"/bin/paster make-config ckan "$CONFIG"
 
   "$CKAN_PASTER" --plugin=ckan config-tool "$CONFIG" -e \
-      "sqlalchemy.url = ${DATABASE_URL}" \
-      "solr_url = ${SOLR_URL}" \
-      "ckan.storage_path = /var/lib/ckan" \
-      "ckan.plugins = stats text_view image_view recline_view hierarchy_display hierarchy_form gobar_theme"  \
-      "ckan.auth.create_user_via_api = false" \
-      "ckan.auth.create_user_via_web = false" \
-      "ckan.locale_default = es" \
-      "email_to = disabled@example.com" \
-      "error_email_from = ckan@$(hostname -f)" \
-      "ckan.site_url = http://172.17.0.4"
-      
+		"sqlalchemy.url=${DATABASE_URL}" \
+		"solr_url=${SOLR_URL}" \
+		"ckan.storage_path = /var/lib/ckan" \
+		"ckan.plugins = stats text_view image_view recline_view hierarchy_display hierarchy_form gobar_theme"  \
+		"ckan.auth.create_user_via_api = false" \
+		"ckan.auth.create_user_via_web = false" \
+		"ckan.locale_default = es" \
+		"'ckan.site_id' = default" \
+		"email_to = disabled@example.com" \
+		"error_email_from = ckan@$(hostname -f)" \
+		"ckan.site_url = http://127.0.0.1"
 
   if [ -n "$ERROR_EMAIL" ]; then
     sed -i -e "s&^#email_to.*&email_to = ${ERROR_EMAIL}&" "$CONFIG"
@@ -62,18 +62,20 @@ write_config () {
 }
 
 link_postgres_url() {
-  local user=$DB_ENV_POSTGRES_USER
-  local pass=$DB_ENV_POSTGRES_PASS
-  local db=$DB_ENV_POSTGRES_DB
-  local host=$DB_PORT_5432_TCP_ADDR
-  local port=$DB_PORT_5432_TCP_PORT
-  echo "postgresql://${user}:${pass}@${host}:${port}/${db}"
+	echo "Linking Park... digo Postgres"
+  	local user=$DB_ENV_POSTGRES_USER
+  	local pass=$DB_ENV_POSTGRES_PASS
+  	local db=$DB_ENV_POSTGRES_DB
+  	local host=$DB_PORT_5432_TCP_ADDR
+  	local port=$DB_PORT_5432_TCP_PORT
+  	echo "postgresql://${user}:${pass}@${host}:${port}/${db}"
 }
 
 link_solr_url() {
-  local host=$SOLR_PORT_8983_TCP_ADDR
-  local port=$SOLR_PORT_8983_TCP_PORT
-  echo "http://${host}:${port}/solr/ckan"
+	echo "linking Solr"
+	local host=$SOLR_PORT_8983_TCP_ADDR
+  	local port=$SOLR_PORT_8983_TCP_PORT
+  	echo "http://${host}:${port}/solr/ckan"
 }
 
 

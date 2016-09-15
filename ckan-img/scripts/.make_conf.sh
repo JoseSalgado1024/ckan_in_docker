@@ -18,26 +18,21 @@ abort () {
 }
 
 write_config () {
-  echo "Creando configuracion para: ${CKAN_CONFIG}/${CKAN_CONFIG_FILE}"
-  "$CKAN_HOME"/bin/paster make-config ckan "$CONFIG"
-
-  "$CKAN_HOME"/bin/paster --plugin=ckan config-tool "$CONFIG" -e \
-      "sqlalchemy.url = ${DATABASE_URL}" \
-      "solr_url = ${SOLR_URL}" \
-      "ckan.storage_path = /var/lib/ckan" \
-      "ckan.plugins = stats text_view image_view recline_view hierarchy_display hierarchy_form gobar_theme"  \
-      "ckan.auth.create_user_via_api = false" \
-      "ckan.auth.create_user_via_web = false" \
-      "ckan.locale_default = es" \
-      "email_to = disabled@example.com" \
-      "ckan.max_resource_size = 200" \
-      "ckan.max_image_size = 10" \
-      "ckan.datapusher.formats = csv xls xlsx tsv application/csv application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" \
-      "ckan.datapusher.url = http://127.0.0.1" \
-      "error_email_from = ckan@$(hostname -f)" \
-      "ckan.datastore.write_url = postgresql://ckan_default:pass@localhost/datastore_default" \
-      "ckan.datastore.read_url = postgresql://datastore_default:pass@localhost/datastore_default" \
-      "ckan.site_url = http://127.0.0.1"
+  #echo "Creando configuracion [$CKAN_CONFIG_FILE]"
+  "$CKAN_HOME"/bin/paster make-config ckan "$CONFIG";
+  CKAN_URL=$(ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
+  "$CKAN_HOME"/bin/paster --plugin=ckan config-tool /etc/ckan/default/production.ini -e \
+    "sqlalchemy.url = ${DATABASE_URL}" \
+    "solr_url = ${SOLR_URL}" \
+    "ckan.site_url=http://$CKAN_URL"\
+    "ckan.site_id = default"
+    "ckan.storage_path = /var/lib/ckan" \
+    "ckan.plugins = stats text_view image_view recline_view hierarchy_display hierarchy_form gobar_theme"  \
+    "ckan.auth.create_user_via_api=false" \
+    "ckan.auth.create_user_via_web=false" \
+    "ckan.locale_default=es" \
+    "email_to=disabled@example.com" \
+    "error_email_from=ckan@$(hostname -f)"
       
 
   if [ -n "$ERROR_EMAIL" ]; then
@@ -46,21 +41,23 @@ write_config () {
 }
 
 link_postgres_url () {
-  local user=$DB_ENV_POSTGRES_USER
-  local pass=$DB_ENV_POSTGRES_PASS
-  local db=$DB_ENV_POSTGRES_DB
-  local host=$DB_PORT_5432_TCP_ADDR
-  local port=$DB_PORT_5432_TCP_PORT
-  echo "postgresql://${user}:${pass}@${host}:${port}/${db}"
+    #echo "Linking Park... digo Postgres ;)"
+    local user=$DB_ENV_POSTGRES_USER
+    local pass=$DB_ENV_POSTGRES_PASS
+    local db=$DB_ENV_POSTGRES_DB
+    local host=$DB_PORT_5432_TCP_ADDR
+    local port=$DB_PORT_5432_TCP_PORT
+    echo "postgresql://${user}:${pass}@${host}:${port}/${db}"
 }
 
 link_solr_url () {
+  #echo "Linking Solr..."
   local host=$SOLR_PORT_8983_TCP_ADDR
   local port=$SOLR_PORT_8983_TCP_PORT
   echo "http://${host}:${port}/solr/ckan"
 }
 
-# If we don't already have a config file, bootstrap
+
 if [ ! -e "$CONFIG" ]; then
   if [ -z "$DATABASE_URL" ]; then
     if ! DATABASE_URL=$(link_postgres_url); then

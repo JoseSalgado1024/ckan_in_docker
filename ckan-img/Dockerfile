@@ -74,5 +74,3 @@ CMD ["/etc/ckan_init.d/start_ckan.sh"]
 
 # OK, Limpiamos y nos vamos
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-
