@@ -19,9 +19,8 @@ exit_code=$(($mconf + $idb))
 
 # Ambos commandos anteriores, fueron exitosos?
 if [ "$exit_code" -eq "0" ] ; then
-	
 	# Forzamos la seleccion de nuestra configuracion actual dentro de WSGI 
-	sed "s/producction.ini/$CKAN_CONFIG_FILE/g" $CKAN_CONFIG/apache.wsgi > temp.f && mv temp.f $CKAN_CONFIG/apache.wsgi  	
+	sed "s/production.ini/$CKAN_CONFIG_FILE/g" $CKAN_CONFIG/apache.wsgi > temp.f && mv temp.f $CKAN_CONFIG/apache.wsgi  	
 	
 	# Si esta corriendo, detenemos Apache & NginX
 	service apache2 stop && service nginx stop;
@@ -32,6 +31,7 @@ if [ "$exit_code" -eq "0" ] ; then
 
 	# Sentencia tonta que evita la finalizacion del script y a su vez, que docker termine el contenedor.
 	while true; do sleep 1000; done
+
 else
 	# Ok.. el mundo ya no es un lugar amigable!
 	echo "-------------------------------------------"
