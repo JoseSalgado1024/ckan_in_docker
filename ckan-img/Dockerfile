@@ -18,6 +18,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qqy install \
             postfix \
             build-essential \
             python-dev \
+            python-minimal \
             python-virtualenv \
             python-pip \
             wget \
