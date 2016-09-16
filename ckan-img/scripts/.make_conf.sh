@@ -10,7 +10,7 @@
 
 set -eu
 
-CONFIG="${CKAN_CONFIG}/${CKAN_CONFIG_FILE}"
+CONFIG="/etc/ckan/default/development.ini"
 
 abort () {
   echo "$@" >&2

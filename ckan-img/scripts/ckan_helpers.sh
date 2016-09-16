@@ -10,27 +10,6 @@ set -eu
 CKAN_PASTER=$CKAN_HOME/bin/paster
 CKAN_PIP=$CKAN_HOME/bin/pip 
 
-# fonts color
-FBLACK="\033[30;"
-FRED="\033[31;"
-FGREEN="\033[32;"
-FYELLOW="\033[33;"
-FBLUE="\033[34;"
-FPURPLE="\033[35;"
-D_FGREEN="\033[6;"
-FWHITE="\033[7;"
-FCYAN="\x1b[36m"
-
-# background color
-BBLACK="40m"
-BRED="41m"
-BGREEN="42m"
-BYELLOW="43m"
-BBLUE="44m"
-BPURPLE="45m"
-D_BGREEN="46m"
-BWHITE="47m"
-
 # Configuracion actual [/etc/ckan/default/nombre.ini]
 CONFIG="${CKAN_CONFIG}/${CKAN_CONFIG_FILE}"
 
