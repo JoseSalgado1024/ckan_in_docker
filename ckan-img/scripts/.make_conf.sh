@@ -24,7 +24,7 @@ write_config () {
   "$CKAN_HOME"/bin/paster --plugin=ckan config-tool /etc/ckan/default/production.ini -e \
     "sqlalchemy.url = ${DATABASE_URL}" \
     "solr_url = ${SOLR_URL}" \
-    "ckan.site_url=http://$CKAN_URL"\
+    "ckan.site_url=http://${CKAN_URL}"\
     "ckan.site_id = default" \
     "ckan.storage_path = /var/lib/ckan" \
     "ckan.plugins = stats text_view image_view recline_view hierarchy_display hierarchy_form gobar_theme"  \
