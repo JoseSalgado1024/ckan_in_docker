@@ -2,14 +2,14 @@ FROM ubuntu:14.04
 MAINTAINER Jose A. Salagdo<jose.salgado.wrk@gmail.com>
 
 # Actualizamos las bases de apt-get!
-RUN apt-get -qq -y update 
+RUN apt-get -q -y update 
 
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository universe
 RUN apt-get update
 
 # Instalamos la Herramientas que vamos a requerir
-RUN DEBIAN_FRONTEND=noninteractive apt-get -qqy install \
+RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
             libevent-dev \
             libpq-dev \
             nginx \
@@ -28,12 +28,11 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qqy install \
             git-core
 
 # Crearemos algunas variables de entorno, que nos seran utiles mas tarde
-ENV CKAN_APACHE2_PORT 80
-ENV CKAN_CONFIG_FILE development.ini
+ENV CKAN_DEFAULT_PORT 5000
+ENV CKAN_APACHE2_PORT 5000
+ENV CKAN_DEV_CONFIG_FILE development.ini
 ENV HOME /root
-ENV CKAN_VERSION 2.5  
-ENV CKAN_SITE_URL localhost 
-ENV CKAN_LOCAL es
+ENV CKAN_VERSION 2.5.1  
 ENV CKAN_HOME /usr/lib/ckan/default
 ENV CKAN_CONFIG /etc/ckan/default
 ENV CKAN_DATA /var/lib/ckan
@@ -54,24 +53,16 @@ RUN dpkg -i /tmp/python-ckan_2.5-trusty_amd64.deb
 RUN $CKAN_HOME/bin/pip install -e "git+https://github.com/gobabiertoAR/datos.gob.ar.git#egg=ckanext-gobar_theme"
 RUN $CKAN_HOME/bin/pip install -e "git+https://github.com/datagovuk/ckanext-hierarchy.git#egg=ckanext-hierarchy"
 
-# Configuramos WSGI & CKANInit
 ADD ./requirements/ckan_default.conf /etc/apache2/sites-enabled/ckan_default.conf 
 ADD ./scripts $CKAN_INIT
 ADD ./requirements/apache.wsgi $CKAN_CONFIG/apache.wsgi
 RUN chmod +x -R $CKAN_INIT/
 RUN chmod 777 -R $CKAN_CONFIG
 
-# Creamos volumenes con el area de Configuracion y Data de CKAN.
-# Configs...
-VOLUME [$CKAN_CONFIG]
-# Data...
-VOLUME [$CKAN_DATA]
-
-# Abrimos el puerto $CKAN_APACHE2_PORT, por omision, el 80. 
-EXPOSE $CKAN_APACHE2_PORT
-
-# Instruccion que se ejecutara al hacer "docker run -d [container-tag]"
 CMD ["/etc/ckan_init.d/start_ckan.sh"]
+
+EXPOSE $CKAN_APACHE2_PORT
+EXPOSE $CKAN_DEFAULT_PORT
 
 # OK, Limpiamos y nos vamos
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
