@@ -95,9 +95,6 @@ _Para instalar y ejecutar CKAN-Docker, debemos seguir los siguientes pasos:_
 		
 		$ docker run -d --link db:db --link solr:solr -p 80:80 jsalgadowk/ckan:latest
 
-
-Al finalizar, y para corroborar que todo esta funcionando perfectamente, chequear [ckan_local](http://localhost).
-
 --- 
 
 #### Si..., todo bien.. pero sigo pensando que es muy dificil...
@@ -111,13 +108,3 @@ _La idea detras de esta implementacion de CKAN, es que **SOLO** te encargagues d
 + RHEL|CentOS:
 
 		sudo su -c "cd /tmp && git clone https://github.com/JoseSalgado1024/ckan_in_docker.git && cd /tmp/ckan_in_docker/rhel-centos_auto-deploy.sh"
-
-+ Windows:
-	
-		Oops! ...No esta listo aun!...
-
-+ OSX:
-	
-		Oops! ...No esta listo aun!...
-
-

@@ -1,5 +1,5 @@
 #!/bin/bash
-source docker_friendy_functions.sh
+source docker_friendly_functions
 
 printf "\n\x1B[32m++----------------------------------------------+\n";
 printf "\x1B[32m|                                               \x1B[32m|\n";
