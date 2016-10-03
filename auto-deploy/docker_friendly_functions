@@ -3,12 +3,25 @@ CKAN_DI="ckan"
 PG_DI="pg-ckan"
 SOLR_DI="solr"
 
+# FONT COLORS & STYLE :D
+R="\x1B[31m"
+G="\x1B[29m"
+GG="\x1B[32m"
+B="\x1B[34m"
+Y="\x1B[33m"
+W="\x1B[37m"
+BL="\x1B[30m"
+V="\x1B[35m"
+C="\x1B[36m"
+BOLD=$(tput bold)
+NORMAL=$(tput sgr0)
+
 # Pull all containers [pg-ckan, ckan, solr]
 docker_pull_all_containers(){
 	echo ""
-	printf "\x1B[37m++----------------------------------------------+\n";
-	printf "\x1B[37m|            DESCARGAR CONTENEDORES             |\n";
-	printf "\x1B[37m+-----------------------------------------------+\x1B[32m\n";
+	printf "\x1B[34m++----------------------------------------------+\n";
+	printf "|            \x1B[37mDESCARGAR CONTENEDORES\x1B[34m             |\n";
+	printf "+-----------------------------------------------+\x1B[32m\n";
 	echo $CKAN_DI $PG_DI $SOLR_DI | xargs -n 1 | while read img; do docker pull $DHUB_USER/$img:latest; done
 }
 
@@ -16,7 +29,7 @@ docker_pull_all_containers(){
 docker_containers_delete_all (){
 	echo ""
 	printf "\x1B[34m++----------------------------------------------+\n";
-	printf "\x1B[37m|              \x1B[37mBYE BYE CONTAINERS\x1B[34m               |";
+	printf "|              \x1B[37mBYE BYE CONTAINERS\x1B[34m               |";
 	printf "+-----------------------------------------------+\x1B[32m";
 	docker rm -f $(docker ps -a -q)
 }

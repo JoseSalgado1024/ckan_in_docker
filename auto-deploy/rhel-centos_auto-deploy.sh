@@ -1,12 +1,13 @@
 #!/bin/bash
 source docker_friendly_functions
 
-printf "\n\x1B[32m++----------------------------------------------+\n";
-printf "\x1B[32m|                                               \x1B[32m|\n";
-printf "\x1B[32m|     \x1B[37mBIENVENIDO A LA INSTALACION AUTOMATICA    \x1B[32m|\n";
-printf "\x1B[32m|         \x1B[37mDE CKAN EN DOCKER RHEL|CentOS         \x1B[32m|\n";
-printf "\x1B[32m|                                        \x1B[34mXX\x1B[37mXX\x1B[34mXX \x1B[32m|\n";
-printf "\x1B[32m+-----------------------------------------------+\n\n";
+clear  
+printf "\n$W ╔═════════════════════════════════════════════════════════╗\n"
+printf "$W ║                                                       $B▓███▓▒░\n"
+printf "$W ║     ${W}BIENVENIDO A LA INSTALACION AUTOMATICA DE ${BOLD}CKAN${NORMAL}    $W▓███▓▒░\n"
+printf "$W ║                 ${W}EN DOCKER ${BOLD}RHEL|CentOS${NORMAL}${W}.                $B▓███▓▒░\n"
+printf "$W ╚═════════════════════════════════════════════════════════╝\n\n"
+
 # Esta docker insalado?	
 if [ $(dpkg-query -W -f='${Status}' docker-engine 2>/dev/null | grep -c "ok installed") -eq 0 ];
 then
