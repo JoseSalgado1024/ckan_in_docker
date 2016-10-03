@@ -6,7 +6,7 @@ printf "\n$W ╔═════════════════════�
 printf "$W ║                                                       $B▓███▓▒░\n"
 printf "$W ║     ${W}BIENVENIDO A LA INSTALACION AUTOMATICA DE ${BOLD}CKAN${NORMAL}    $W▓███▓▒░\n"
 printf "$W ║                ${W}EN DOCKER ${BOLD}UBUNTU|DEBIAN${NORMAL}.               $B▓███▓▒░\n"
-printf "$W ╚═════════════════════════════════════════════════════════╝\n\n"
+printf "$W ╚═════════════════════════════════════════════════════════╝\n"
 # Esta docker insalado?	
 if [ $(dpkg-query -W -f='${Status}' docker-engine 2>/dev/null | grep -c "ok installed") -eq 0 ];
 then
