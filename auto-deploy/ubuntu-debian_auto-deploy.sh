@@ -15,9 +15,11 @@ then
 fi
 # Instalemos CKAN! :D
 deploy_portal
+printf "CKAN esta iniciando... "
+sleep 20
 if [[ $? -eq 0 ]]; then
 	# OK! veamos como quedo tu portal! :D
-	echo "Todo listo! el portal esta funcionando! :D"
+	printf "[OK]\nTodo listo! el portal esta funcionando! :D"
 else
-	echo "Oops... Algo se rompio..."
+	printf "[FALLO]\nOops... Algo se rompio..."
 fi
