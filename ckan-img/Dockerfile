@@ -30,7 +30,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
 # Crearemos algunas variables de entorno, que nos seran utiles mas tarde
 ENV CKAN_DEFAULT_PORT 5000
 ENV CKAN_APACHE2_PORT 5000
-ENV CKAN_DEV_CONFIG_FILE development.ini
+ENV CKAN_CONFIG_FILE development.ini
 ENV HOME /root
 ENV CKAN_VERSION 2.5.1  
 ENV CKAN_HOME /usr/lib/ckan/default

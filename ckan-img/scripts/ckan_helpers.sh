@@ -1,6 +1,3 @@
-
-#!/bin/bash
-
 : ${DATABASE_URL:=}
 : ${SOLR_URL:=}
 : ${ERROR_EMAIL:=}
@@ -19,7 +16,7 @@ abort() {
 }
 
 write_config () {
-  echo "Creando configuracion para: ${CKAN_CONFIG}/${CKAN_CONFIG_FILE}"
+  echo "Creando configuracion para: ${CONFIG}"
   "$CKAN_HOME"/bin/paster make-config ckan "$CONFIG"
 
   "$CKAN_PASTER" --plugin=ckan config-tool "$CONFIG" -e \
@@ -123,7 +120,6 @@ ckan_build_context(){
 
 fooTest(){
 	echo "friendly-ckan tools instaladas!"
-	#source /etc/ckan_init.d/ckan_helpers.sh
 } 
 
 fooTest

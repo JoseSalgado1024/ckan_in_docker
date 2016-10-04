@@ -5,6 +5,7 @@
 #  debemos hacer algunas cosas para que todo funcione
 #  correctamente. 
 # ----------------------------------------------------- #
+
 APACHE2_WSGI=$CKAN_CONFIG/apache.wsgi
 
 # Creamos contexto para CKAN
@@ -19,6 +20,7 @@ exit_code=$(($mconf + $idb))
 
 # Ambos commandos anteriores, fueron exitosos?
 if [ "$exit_code" -eq "0" ] ; then
+
 	# Forzamos la seleccion de nuestra configuracion actual dentro de WSGI 
 	sed "s/production.ini/$CKAN_CONFIG_FILE/g" $CKAN_CONFIG/apache.wsgi > temp.f && mv temp.f $CKAN_CONFIG/apache.wsgi  	
 	
@@ -27,8 +29,8 @@ if [ "$exit_code" -eq "0" ] ; then
 	service apache2 start && service apache2 reload && service nginx restart;
 	
 	# Agrego herramientas para simplificar el uso de CKAN
-	# source $CKAN_INIT/ckan_helpers.sh #No, no yet!
-
+	source $CKAN_INIT/ckan_helpers.sh 
+	
 	# Sentencia tonta que evita la finalizacion del script y a su vez, que docker termine el contenedor.
 	while true; do sleep 1000; done
 
