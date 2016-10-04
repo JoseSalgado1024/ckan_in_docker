@@ -19,7 +19,7 @@ printf "CKAN esta iniciando... "
 sleep 20
 if [[ $? -eq 0 ]]; then
 	# OK! veamos como quedo tu portal! :D
-	printf "[OK]\nTodo listo! el portal esta funcionando! :D"
+	printf "[OK]\nTodo listo! el portal esta funcionando! :D\n"
 else
-	printf "[FALLO]\nOops... Algo se rompio..."
+	printf "[FALLO]\nOops... Algo se rompio...\n"
 fi
