@@ -18,46 +18,41 @@ NORMAL=$(tput sgr0)
 
 # Pull all containers [pg-ckan, ckan, solr]
 docker_pull_all_containers(){
-	echo ""
-	printf "\x1B[34m++----------------------------------------------+\n";
-	printf "|            \x1B[37mDESCARGAR CONTENEDORES\x1B[34m             |\n";
-	printf "+-----------------------------------------------+\x1B[32m\n";
+	printf "${C}╔════════════════════════════════════════ ${B}■${C} ${W}■${C} ${B}■${C} ╗\n";
+	printf "║            ${W}DESCARGAR CONTENEDORES${C}             ║\n";
+	printf "╚═══════════════════════════════════════════════╝${NORMAL}\n";
 	echo $CKAN_DI $PG_DI $SOLR_DI | xargs -n 1 | while read img; do docker pull $DHUB_USER/$img:latest; done
 }
 
 # Delete all containers! (cause i think is fun..)
 docker_containers_delete_all (){
-	echo ""
-	printf "\x1B[34m++----------------------------------------------+\n";
-	printf "|              \x1B[37mBYE BYE CONTAINERS\x1B[34m               |";
-	printf "+-----------------------------------------------+\x1B[32m";
+	printf "${C}╔════════════════════════════════════════ ${B}■${C} ${W}■${C} ${B}■${C} ╗\n";
+	printf "║               ${W}BYE BYE CONTAINERS${C}              ║\n";
+	printf "╚═══════════════════════════════════════════════╝${NORMAL}\n";
 	docker rm -f $(docker ps -a -q)
 }
 
 # Stop all your running docker containers
 docker_stop_all (){
-	echo ""
-	printf "\x1B[34m++----------------------------------------------+\n";
-	printf "|          \x1B[37mSTOP ALL DOCKER CONTAINERS\x1B[34m           |\n";
-	printf "+-----------------------------------------------+\x1B[32m\n";
+	printf "${C}╔════════════════════════════════════════ ${B}■${C} ${W}■${C} ${B}■${C} ╗\n";
+	printf "║          ${W}STOP ALL ${BOLD}DOCKER${NORMAL}${W} CONTAINERS${C}           ║\n";
+	printf "╚═══════════════════════════════════════════════╝${NORMAL}\n";
 	docker stop -f $(docker ps -a -q)
 }
 
 # Bye Bye Docker images!
 docker_imgs_delete_all (){
-	echo ""
-	printf "\x1B[34m++----------------------------------------------+\n";
-	printf "|           \x1B[37mBYE BYE DOCKER IMAGES\x1B[34m               |\n";
-	printf "+-----------------------------------------------+\x1B[32m\n";
+	printf "${C}╔════════════════════════════════════════ ${B}■${C} ${W}■${C} ${B}■${C} ╗\n";
+	printf "║            ${W}BYE BYE ${BOLD}DOCKER ${NORMAL}${W}IMAGES${C}              ║\n";
+	printf "╚═══════════════════════════════════════════════╝${NORMAL}\n";
 	docker rmi -f $(docker images -q)
 }
 
 # EASY WAY TO INSTALL DCOKER (...cause i'm a rockstar \o/)
 install_docker_debian (){
-	echo ""
-	printf "\x1B[34m++----------------------------------------------+\n";
-	printf "|                \x1B[37mINSTALANDO DOCKER\x1B[34m              |\n";
-	printf "+-----------------------------------------------+\x1B[32m\n";
+	printf "${C}╔════════════════════════════════════════ ${B}■${C} ${W}■${C} ${B}■${C} ╗\n";
+	printf "║               ${W}INSTALANDO ${BOLD}DOCKER${NORMAL}${C}               ║\n";
+	printf "╚═══════════════════════════════════════════════╝${NORMAL}\n";
 	### Paso 1 UPDATE & UPGRADE
 	sudo su -c "apt-get -qqy update && apt-get -qqy upgrade"
 
@@ -111,10 +106,9 @@ install_docker_rhel(){
 }
 
 start_ckan-docker (){
-	echo ""
-	printf "\x1B[34m++----------------------------------------------+\n";
-  	printf "|         \x1B[37mINICIANDO PORTAL CKAN-DOCKER\x1B[34m          |\n";
-  	printf "+-----------------------------------------------+\x1B[32m\n";
+	printf "${C}╔════════════════════════════════════════ ${B}■${C} ${W}■${C} ${B}■${C} ╗\n";
+	printf "║         ${W}INICIANDO PORTAL ${BOLD}CKAN-DOCKER${NORMAL}${C}          ║\n";
+	printf "╚═══════════════════════════════════════════════╝${NORMAL}\n";
   	echo "$PG_DI $SOLR_DI" | xargs -n 1 | while read img; do docker run -d  --name $img $DHUB_USER/$img; done
   	docker run -d --link $PG_DI:db --link $SOLR_DI:solr -p 80:80 $DHUB_USER/$CKAN_DI:latest
 
