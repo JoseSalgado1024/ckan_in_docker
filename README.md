@@ -103,7 +103,8 @@ _La idea detras de esta implementacion de CKAN, es que **SOLO** te encargagues d
 
 + Ubuntu|Debian:
 
-		sudo su -c "cd /tmp && git clone https://github.com/JoseSalgado1024/ckan_in_docker.git cd /tmp/ckan_in_docker/auto-deploy/ && ./ubuntu-debian_auto-deploy.sh"
+		sudo su -c "cd /tmp && git clone https://github.com/JoseSalgado1024/ckan_in_docker.git && cd /tmp/ckan_in_docker/auto-deploy/ && ./ubuntu-debian_auto-deploy.sh"
+
 
 + RHEL|CentOS:
 
