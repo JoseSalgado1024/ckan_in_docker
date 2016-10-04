@@ -50,7 +50,7 @@ RUN chown www-data:www-data $CKAN_DATA
 RUN dpkg -i /tmp/python-ckan_2.5-trusty_amd64.deb
 
 # Instalamos las extensiones de CKAN: GobAR-Theme & Hierarchy 
-RUN $CKAN_HOME/bin/pip install -e "git+https://github.com/gobabiertoAR/datos.gob.ar.git#egg=ckanext-gobar_theme"
+RUN $CKAN_HOME/bin/pip install -e "git+https://github.com/datosgobar/datos.gob.ar.git#egg=ckanext-gobar_theme"
 RUN $CKAN_HOME/bin/pip install -e "git+https://github.com/datagovuk/ckanext-hierarchy.git#egg=ckanext-hierarchy"
 
 ADD ./requirements/ckan_default.conf /etc/apache2/sites-enabled/ckan_default.conf 
