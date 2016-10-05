@@ -23,13 +23,11 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
             python-pip \
             wget \
             nano \
-            libapache2-mod-python \
             libapache2-mod-wsgi \
             git-core
 
 # Crearemos algunas variables de entorno, que nos seran utiles mas tarde
-ENV CKAN_DEFAULT_PORT 5000
-ENV CKAN_APACHE2_PORT 5000
+ENV CKAN_APACHE2_PORT 80
 ENV CKAN_CONFIG_FILE development.ini
 ENV HOME /root
 ENV CKAN_VERSION 2.5.1  
@@ -49,6 +47,9 @@ RUN chown www-data:www-data $CKAN_DATA
 # Instalamos CKAN
 RUN dpkg -i /tmp/python-ckan_2.5-trusty_amd64.deb
 
+# Actualizamos pip
+RUN $CKAN_HOME/bin/pip install --upgrade pip
+
 # Instalamos las extensiones de CKAN: GobAR-Theme & Hierarchy 
 RUN $CKAN_HOME/bin/pip install -e "git+https://github.com/datosgobar/datos.gob.ar.git#egg=ckanext-gobar_theme"
 RUN $CKAN_HOME/bin/pip install -e "git+https://github.com/datagovuk/ckanext-hierarchy.git#egg=ckanext-hierarchy"
@@ -56,13 +57,16 @@ RUN $CKAN_HOME/bin/pip install -e "git+https://github.com/datagovuk/ckanext-hier
 ADD ./requirements/ckan_default.conf /etc/apache2/sites-enabled/ckan_default.conf 
 ADD ./scripts $CKAN_INIT
 ADD ./requirements/apache.wsgi $CKAN_CONFIG/apache.wsgi
+ADD ./requirements/datapusher.wsgi $CKAN_CONFIG/datapusher.wsgi
+ADD ./requirements/rc.local /etc/rc.local
 RUN chmod +x -R $CKAN_INIT/
 RUN chmod 777 -R $CKAN_CONFIG
 
 CMD ["/etc/ckan_init.d/start_ckan.sh"]
 
+VOLUME $CKAN_CONFIG
+
 EXPOSE $CKAN_APACHE2_PORT
-EXPOSE $CKAN_DEFAULT_PORT
 
 # OK, Limpiamos y nos vamos
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
