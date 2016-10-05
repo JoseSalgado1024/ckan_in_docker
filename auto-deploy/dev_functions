@@ -1,0 +1,4 @@
+bcpvf (){
+	# Crear capertas para volumenes
+	mkdir -p $HOME/ckan_volumes/data $HOME/ckan_volumes/config $HOME/ckan_volumes/pgdata
+}
