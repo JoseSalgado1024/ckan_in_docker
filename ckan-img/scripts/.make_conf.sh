@@ -18,6 +18,7 @@ abort () {
 }
 
 write_config () {
+  CKAN_IP=$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
   "$CKAN_HOME"/bin/paster make-config ckan "$CONFIG"
 
   "$CKAN_HOME"/bin/paster --plugin=ckan config-tool "$CONFIG" -e \
@@ -30,7 +31,7 @@ write_config () {
       "ckan.locale_default = es" \
       "email_to = disabled@example.com" \
       "error_email_from = ckan@$(hostname -f)" \
-      "ckan.site_url = http://localhost"
+      "ckan.site_url = http://${CKAN_IP}"
 
   if [ -n "$ERROR_EMAIL" ]; then
     sed -i -e "s&^#email_to.*&email_to = ${ERROR_EMAIL}&" "$CONFIG"
@@ -65,4 +66,5 @@ if [ ! -e "$CONFIG" ]; then
     fi
   fi
   write_config
+  source /etc/ckan_init.d/ckan_helpers.sh
 fi

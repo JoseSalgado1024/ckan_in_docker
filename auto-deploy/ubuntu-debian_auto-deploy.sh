@@ -1,5 +1,6 @@
 #!/bin/bash
 source docker_friendly_functions
+source dev_functions
 
 clear 
 printf "\n$W╔═════════════════════════════════════════════════════════╗\n"
@@ -14,9 +15,10 @@ then
 	install_docker_debian
 fi
 # Instalemos CKAN! :D
+
 deploy_portal
 printf "CKAN esta iniciando... "
-sleep 20
+sleep 5
 if [[ $? -eq 0 ]]; then
 	# OK! veamos como quedo tu portal! :D
 	printf "[OK]\nTodo listo! el portal esta funcionando! :D\n"
