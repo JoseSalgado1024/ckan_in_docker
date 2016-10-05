@@ -26,7 +26,7 @@ if [ "$exit_code" -eq "0" ] ; then
 	
 	# Si esta corriendo, detenemos Apache & NginX
 	service apache2 stop && service nginx stop;
-	service apache2 start && service apache2 reload && service nginx restart;
+	service apache2 start && service apache2 reload && service apache2 restart && service nginx restart;
 	
 	# Agrego herramientas para simplificar el uso de CKAN
 	source $CKAN_INIT/ckan_helpers.sh 
