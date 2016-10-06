@@ -8,6 +8,9 @@
 # Email to which errors should be sent (optional, default: none)
 : ${ERROR_EMAIL:=}
 
+: ${DATASTORE_URL_RO:=}
+: ${DATASTORE_URL_RW:=}
+
 set -eu
 
 CONFIG="${CKAN_CONFIG}/${CKAN_CONFIG_FILE}"
@@ -25,11 +28,15 @@ write_config () {
       "sqlalchemy.url = ${DATABASE_URL}" \
       "solr_url = ${SOLR_URL}" \
       "ckan.storage_path = /var/lib/ckan" \
-      "ckan.plugins = stats text_view image_view recline_view hierarchy_display hierarchy_form gobar_theme"  \
+      "ckan.plugins = stats text_view image_view recline_view hierarchy_display hierarchy_form gobar_theme datastore datapusher"  \
       "ckan.auth.create_user_via_api = false" \
       "ckan.auth.create_user_via_web = false" \
       "ckan.locale_default = es" \
       "email_to = disabled@example.com" \
+      "ckan.datapusher.url = http://${CKAN_IP}:8800" \
+      "ckan.datastore.write_url = ${DATASTORE_URL_RW}" \
+      "ckan.datastore.read_url = ${DATASTORE_URL_RO}" \
+      "ckan.max_resource_size = 300" \
       "error_email_from = ckan@$(hostname -f)" \
       "ckan.site_url = http://${CKAN_IP}"
 
@@ -38,12 +45,16 @@ write_config () {
   fi
 }
 
+
+
 link_postgres_url () {
   local user=$DB_ENV_POSTGRES_USER
   local pass=$DB_ENV_POSTGRES_PASS
   local db=$DB_ENV_POSTGRES_DB
   local host=$DB_PORT_5432_TCP_ADDR
   local port=$DB_PORT_5432_TCP_PORT
+  DATASTORE_URL_RO="postgresql://$datastore_default:${pass}@${host}:${port}/datastore_default"
+  DATASTORE_URL_RW="postgresql://${user}:${pass}@${host}:${port}/datastore_default"
   echo "postgresql://${user}:${pass}@${host}:${port}/${db}"
 }
 

@@ -21,9 +21,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
             python-minimal \
             python-virtualenv \
             python-pip \
+            libapache2-mod-wsgi \
             wget \
             nano \
-            libapache2-mod-wsgi \
+            ca-certificates \
             git-core
 
 # Crearemos algunas variables de entorno, que nos seran utiles mas tarde
@@ -33,8 +34,14 @@ ENV HOME /root
 ENV CKAN_VERSION 2.5.1  
 ENV CKAN_HOME /usr/lib/ckan/default
 ENV CKAN_CONFIG /etc/ckan/default
-ENV CKAN_DATA /var/lib/ckan
+ENV CKAN_DATA /var/lib/ckan/default
 ENV CKAN_INIT /etc/ckan_init.d
+
+# Instalamos psql
+RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+RUN apt-get  -q -y pgadmin3
+RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install pgadmin3
+
 
 # Bajamos el .deb de ckan
 RUN mkdir -p $CKAN_HOME $CKAN_CONFIG $CKAN_DATA

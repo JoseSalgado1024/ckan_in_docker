@@ -31,8 +31,10 @@ if [ "$exit_code" -eq "0" ] ; then
 	# Agrego herramientas para simplificar el uso de CKAN
 	source $CKAN_INIT/ckan_helpers.sh 
 	
-	# Sentencia tonta que evita la finalizacion del script y a su vez, que docker termine el contenedor.
-	while true; do sleep 1000; done
+	# Disponemos logs de CKAN para ser usada mediante docker logs [docker_container_name]
+	# de esta manera logramos q no finalice el contenedor e incluso, tener una forma rapida de ver los logs.
+	tail -f /var/log/apache2/ckan_default.error.log
+
 
 else
 	# Ok.. el mundo ya no es un lugar amigable!
