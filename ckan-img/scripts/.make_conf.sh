@@ -27,15 +27,16 @@ write_config () {
   "$CKAN_HOME"/bin/paster --plugin=ckan config-tool "$CONFIG" -e \
       "sqlalchemy.url = ${DATABASE_URL}" \
       "solr_url = ${SOLR_URL}" \
-      "ckan.storage_path = /var/lib/ckan" \
+      "ckan.storage_path = ${CKAN_DATA}" \
       "ckan.plugins = stats text_view image_view recline_view hierarchy_display hierarchy_form gobar_theme datastore datapusher"  \
       "ckan.auth.create_user_via_api = false" \
       "ckan.auth.create_user_via_web = false" \
       "ckan.locale_default = es" \
       "email_to = disabled@example.com" \
       "ckan.datapusher.url = http://${CKAN_IP}:8800" \
-      "ckan.datastore.write_url = ${DATASTORE_URL_RW}" \
-      "ckan.datastore.read_url = ${DATASTORE_URL_RO}" \
+      "ckan.datapusher.formats = csv xls xlsx tsv application/csv application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" \
+      "ckan.datastore.write_url = $(link_rw_datastore)" \
+      "ckan.datastore.read_url = $(link_ro_datastore)" \
       "ckan.max_resource_size = 300" \
       "error_email_from = ckan@$(hostname -f)" \
       "ckan.site_url = http://${CKAN_IP}"
@@ -46,6 +47,24 @@ write_config () {
 }
 
 
+link_rw_datastore (){
+  local user=$DB_ENV_POSTGRES_USER
+  local pass=$DB_ENV_POSTGRES_PASS
+  local db=$DB_ENV_POSTGRES_DB
+  local host=$DB_PORT_5432_TCP_ADDR
+  local port=$DB_PORT_5432_TCP_PORT
+  echo "postgresql://${user}:${pass}@${host}:${port}/datastore_default"
+}
+
+
+link_ro_datastore (){
+  local user=$DB_ENV_POSTGRES_USER
+  local pass=$DB_ENV_POSTGRES_PASS
+  local db=$DB_ENV_POSTGRES_DB
+  local host=$DB_PORT_5432_TCP_ADDR
+  local port=$DB_PORT_5432_TCP_PORT
+  echo "postgresql://datastore_default:pass@${host}:${port}/datastore_default"
+}
 
 link_postgres_url () {
   local user=$DB_ENV_POSTGRES_USER
@@ -53,8 +72,6 @@ link_postgres_url () {
   local db=$DB_ENV_POSTGRES_DB
   local host=$DB_PORT_5432_TCP_ADDR
   local port=$DB_PORT_5432_TCP_PORT
-  DATASTORE_URL_RO="postgresql://$datastore_default:${pass}@${host}:${port}/datastore_default"
-  DATASTORE_URL_RW="postgresql://${user}:${pass}@${host}:${port}/datastore_default"
   echo "postgresql://${user}:${pass}@${host}:${port}/${db}"
 }
 
@@ -68,14 +85,13 @@ link_solr_url () {
 if [ ! -e "$CONFIG" ]; then
   if [ -z "$DATABASE_URL" ]; then
     if ! DATABASE_URL=$(link_postgres_url); then
-      abort "no DATABASE_URL specified and linked container called 'db' was not found"
+      abort "Imposible conectar DATABASE_URL ..."
     fi
   fi
   if [ -z "$SOLR_URL" ]; then
     if ! SOLR_URL=$(link_solr_url); then
-      abort "no SOLR_URL specified and linked container called 'solr' was not found"
+      abort "Imposible conectar SOLR_URL ..."
     fi
   fi
   write_config
-  source /etc/ckan_init.d/ckan_helpers.sh
 fi

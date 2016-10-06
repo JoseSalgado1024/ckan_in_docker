@@ -4,9 +4,9 @@ MAINTAINER Jose A. Salagdo<jose.salgado.wrk@gmail.com>
 # Actualizamos las bases de apt-get!
 RUN apt-get -q -y update 
 
-RUN apt-get install -y software-properties-common
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common
 RUN add-apt-repository universe
-RUN apt-get update
+RUN DEBIAN_FRONTEND=noninteractive apt-get update
 
 # Instalamos la Herramientas que vamos a requerir
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
@@ -34,12 +34,12 @@ ENV HOME /root
 ENV CKAN_VERSION 2.5.1  
 ENV CKAN_HOME /usr/lib/ckan/default
 ENV CKAN_CONFIG /etc/ckan/default
-ENV CKAN_DATA /var/lib/ckan/default
+ENV CKAN_DATA /var/lib/ckan
 ENV CKAN_INIT /etc/ckan_init.d
 
 # Instalamos psql
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-RUN apt-get  -q -y pgadmin3
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install pgadmin3
 
 
@@ -70,10 +70,13 @@ ADD ./requirements/rc.local /etc/rc.local
 RUN chmod +x -R $CKAN_INIT/
 RUN chmod 777 -R $CKAN_CONFIG
 
+# Script de inicializacion para ckan.
 CMD ["/etc/ckan_init.d/start_ckan.sh"]
 
+# Creo un volumen para las configs.
 VOLUME $CKAN_CONFIG
 
+# Abro el puerto de 80(ad) para Apache
 EXPOSE $CKAN_APACHE2_PORT
 
 # OK, Limpiamos y nos vamos
