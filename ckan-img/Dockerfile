@@ -50,6 +50,7 @@ RUN wget http://packaging.ckan.org/python-ckan_2.5-trusty_amd64.deb -P /tmp
 RUN ln -s $CKAN_HOME/src/ckan/ckan/config/who.ini $CKAN_CONFIG/who.ini
 RUN mkdir -p $CKAN_HOME $CKAN_CONFIG $CKAN_DATA
 RUN chown www-data:www-data $CKAN_DATA
+RUN chmod u+rwx $CKAN_DATA
 
 # Instalamos CKAN
 RUN dpkg -i /tmp/python-ckan_2.5-trusty_amd64.deb
