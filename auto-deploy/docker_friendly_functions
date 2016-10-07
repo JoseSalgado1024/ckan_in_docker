@@ -123,12 +123,14 @@ deploy_portal (){
 }
 
 print_ckan_status() {
-	printf "\n----------------CKAN STATUS---------------------"
+	echo ""
+	echo "CKAN STATUS:"
+	echo "==========="
 	printf "CKAN corriendo en: \t http://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ckan)\n"
 	printf "DPusher corriendo en: \t http://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ckan):8800\n"
 	printf "PGCKAN corriendo en: \t postgres://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' pg-ckan):5432\n"
 	printf "SOLR corriendo en:  \t http://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' solr):8983\n"
-	printf "-------------------------------------------------"
+	echo ""
 }
 
 bcpvf (){
