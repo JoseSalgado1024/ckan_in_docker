@@ -80,6 +80,7 @@ _Descargar e Instalar desde:_
 
 _En funcion a la probable dificultad de implementacion e incluso, la cantidad de pasos a realizar para lograr un deploy existoso, existen dos formas de instalar esta distro de **CKAN**. Si no tenes muchos conocimientos de CKAN, Docker o de administracion de servidores en general, muy posiblemente, deberias utilizar la instalacion **[Simplificada  de CKAN](#instalacion-simplificada-de-ckan)**, la cual, esta pensada para que en la menor cantidad de pasos y de manera sencilla, tengas un Portal de Datos Funciona (Y muy bello :D). Ahora si por ejemplo, ya conoces la plataforma, tenes experiencia con Docker o simplemente, queres entender como es que funciona esta implementacion, te sugiero que revises la **[Instalacion Avanzada de CKAN](#instalacion-avanzada-de-ckan)**_
 
+---
 
 ### Instalacion Simplificada de CKAN:
 
@@ -93,6 +94,8 @@ _La idea detras de esta implementacion de CKAN, es que **SOLO** te encargagues d
 + RHEL|CentOS:
 
 		sudo su -c "cd /tmp && git clone https://github.com/JoseSalgado1024/ckan_in_docker.git && cd /tmp/ckan_in_docker/auto-deploy/ && ./rhel-centos_auto-deploy.sh && rm -f -r /tmp/ckan_in_docker"
+
+---
 
 ### Instalacion Avanzada de CKAN
 
@@ -123,7 +126,7 @@ _Para instalar y ejecutar CKAN-Docker, debemos seguir los siguientes pasos:_
 		$ cd ckan_in_docker/
 		$ docker build -t jsalgadowk/ckan:latest .
 
-+ Paso 3: _Correr contenedor  de **CKAN**_
++ Paso 5: _Correr contenedor  de **CKAN**_
 		
 		$ docker run -d --link pg-ckan:db --link solr:solr -p 80:80 jsalgadowk/ckan:latest
 
