@@ -122,19 +122,11 @@ deploy_portal (){
 	start_ckan-docker 
 }
 
-
-server_is_running () {
-	if ping -c 10 $1; then
-	    echo "OK"
-	else
-	    echo "FAIL"
-	fi
-}
-
-check_ckan_status() {
-	printf "CKAN Status \t [$(server_is_running $(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ckan)])\n"
-	printf "PGCKAN Status \t [$(server_is_running $(docker inspect --format '{{ .NetworkSettings.IPAddress }}' pg-ckan)])\n"
-	printf "SOLR Status \t [$(server_is_running $(docker inspect --format '{{ .NetworkSettings.IPAddress }}' solr)])\n"
+print_ckan_status() {
+	printf "CKAN corriendo en: \t http://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ckan)\n"
+	printf "DataPusher corriendo en: \t http://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ckan):8800\n"
+	printf "PGCKAN corriendo en: \t postgres://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' pg-ckan):5432\n"
+	printf "SOLR corriendo en:  \t http://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' solr):8983\n"
 }
 
 bcpvf (){
