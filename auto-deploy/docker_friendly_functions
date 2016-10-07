@@ -121,3 +121,24 @@ deploy_portal (){
 	# Paso 2: Run CKAN!
 	start_ckan-docker 
 }
+
+
+server_is_running () {
+	if [[ "$#" -gt 0]]; then
+		if ping -c 10 $1; then
+    		echo "OK"
+		fi
+	fi
+	echo "FALLO"
+}
+
+check_ckan_status() {
+	printf "CKAN Status \t [$(server_is_running [$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ckan)])"
+	printf "POSTGRES Status \t [$(server_is_running $(docker inspect --format '{{ .NetworkSettings.IPAddress }}' pg-ckan)])"
+	printf "SOLR Status \t [$(server_is_running $(docker inspect --format '{{ .NetworkSettings.IPAddress }}' solr)])"
+}
+
+bcpvf (){
+	# Crear capertas para volumenes
+	mkdir -p $HOME/ckan_volumes/data $HOME/ckan_volumes/config $HOME/ckan_volumes/pgdata
+}

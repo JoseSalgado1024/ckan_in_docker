@@ -1,6 +1,5 @@
 #!/bin/bash
 source docker_friendly_functions
-source dev_functions
 
 clear 
 printf "\n$W╔═════════════════════════════════════════════════════════╗\n"
