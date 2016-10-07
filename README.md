@@ -20,8 +20,11 @@ Comprehensive Knowledge Archive Network (CKAN) es una aplicación web de código
 
 ## Que es DOCKER?
 es un proyecto de código abierto que automatiza el despliegue de aplicaciones dentro de contenedores de software, proporcionando una capa adicional de abstracción y automatización de Virtualización a nivel de sistema operativo en Linux. _Fuente: [wikipedia](https://es.wikipedia.org/wiki/Docker_(software))_
+
 ## Porque CKAN & Docker?
+
 _Dios Sabe... Nah! TODO_
+
 ## Con que cuenta esta version de CKAN?
 
 Features:
@@ -42,11 +45,12 @@ Features:
 
 + Docker para [OSX](https://docs.docker.com/docker-for-mac).
 + Docker para [Ubuntu/Debian](https://github.com/JoseSalgado1024/ckan_in_docker/blob/master/aux-docs/docker_Ubuntu-Debian.md).
-+ Docker para [RHEL/CentOS](https://github.com/JoseSalgado1024/ckan_in_docker/blob/master/aux-docs/docker_rhel-centos.md).
++ Docker para [RHEL/CentOS](https://github.com/JoseSalgado1024/ckan_in_docker/blob/master/aux-docs/docker_rhel-centos.md).
 + Docker para [Windows](https://docs.docker.com/engine/installation/windows).
 
 
-### GIT TOOLs(_...All you need is Git..._):
+### GIT TOOLS
+_(...All you need is Git...)_:
 	
 + Windows:
 _Descargar e Instalar desde:_
