@@ -14,9 +14,9 @@ then
 	install_docker_debian
 fi
 # Instalemos CKAN! :D
-deploy_portal
 printf "CKAN esta iniciando... "
-sleep 5
+deploy_portal
+sleep 1
 if [[ $? -eq 0 ]]; then
 	# OK! veamos como quedo tu portal! :D
 	printf "[OK]\nTodo listo! el portal esta funcionando! :D\n "
