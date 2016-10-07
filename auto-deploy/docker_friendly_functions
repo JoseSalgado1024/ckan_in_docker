@@ -124,18 +124,16 @@ deploy_portal (){
 
 
 server_is_running () {
-	if [[ "$#" -gt "0" ]] ; 
-		then
-		if ping -c 10 $1; then
-    		echo "OK"
-		fi
+	if ping -c 10 $1; then
+	    echo "OK"
+	else
+	    echo "OK"
 	fi
-	echo "FALLO"
 }
 
 check_ckan_status() {
-	printf "CKAN Status \t [$(server_is_running [$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ckan)])"
-	printf "POSTGRES Status \t [$(server_is_running $(docker inspect --format '{{ .NetworkSettings.IPAddress }}' pg-ckan)])"
+	printf "CKAN Status \t [$(server_is_running $(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ckan)])"
+	printf "PGCKAN Status \t [$(server_is_running $(docker inspect --format '{{ .NetworkSettings.IPAddress }}' pg-ckan)])"
 	printf "SOLR Status \t [$(server_is_running $(docker inspect --format '{{ .NetworkSettings.IPAddress }}' solr)])"
 }
 
