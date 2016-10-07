@@ -12,7 +12,9 @@ _El mismo **CKAN** de siempre pero.. bellamente dockerizado...:heart_eyes:_
 + [Instalacion y Ejecucion de CKAN](#instalacion-y-ejecucion-de-ckan)
     + [Instalacion Simplificada de CKAN](#instalacion-simplificada-de-ckan)
     + [Instalacion Avanzada de CKAN](#instalacion-avanzada-de-ckan)
+
 ---
+
 ## Que es CKAN?
 Comprehensive Knowledge Archive Network (CKAN) es una aplicación web de código abierto para el almacenamiento y la distribución de los datos, tales como hojas de cálculo y los contenidos de las bases de datos. Está inspirado en las capacidades de gestión de paquetes comunes para abrir sistemas operativos, como Linux, y está destinado a ser el "apt-get de Debian para los datos". _Fuente: [wikipedia](https://es.wikipedia.org/wiki/CKAN)_
 
