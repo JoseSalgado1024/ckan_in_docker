@@ -98,36 +98,44 @@ _La idea detras de esta implementacion de CKAN, es que **SOLO** te encargagues d
 ---
 
 ### Instalacion Avanzada de CKAN
++ Instalacion de CKAN con contenedores de Docker ya compilados:
+	
+	_Para esta clase de instalacion, no es necesario clonar el repo, dado que usaremos contenedores alojados en [DockerHub](https://hub.docker.com/) y el proceso de instalacion se divide en seis pasos.
+
++ Instalacion de CKAN usando Dockerfiles
 
 _Para instalar y ejecutar CKAN-Docker, debemos seguir los siguientes pasos:_
 
-+ Paso 1: Clonar Repositorio. _Es recomendable clonar el repo dentro de /tmp (o C:\temp en **Windows X**), dado que al finalizar la instalacion, no usaremos mas el repositorio_.
++ Paso 1: Clonar Repositorio. 
+_Es recomendable clonar el repo dentro de /tmp (o C:\temp en **Windows X**), dado que al finalizar la instalacion, no usaremos mas el repositorio_.
 		
 		$ cd /tmp # en Linux, en Windows, usar cd C:\temp
 		$ git clone https://github.com/JoseSalgado1024/ckan_in_docker.git
 
 + Paso 2: _construir y lanzar el contenedor de **PostgreSQL** usando el Dockerfile hubicado en **postgresql-img/**._ 
 
-		$ cd ckan_in_docker/postgresql-img/
+		$ cd /tmp/ckan_in_docker/postgresql-img/
 		$ docker build -t jsalgadowk/postgresql:latest .
 		$ docker run -d  --name pg-ckan jsalgadowk/pg-ckan:latest
 
 
 + Paso 3: _construir y lanzar el contenedor de **Solr** usando el Dockerfile hubicado en **solr-img/**._
 
-		# Salimos una carpeta hacia atras mediante cd ..
-		$ cd ckan_in_docker/solr-img/ 
+		$ cd /tmp/ckan_in_docker/solr-img/ 
 		$ docker build -t jsalgadowk/solr:latest .
 		$ docker run -d  --name solr jsalgadowk/solr:latest
 
 + Paso 4: _construir el contenedor de **ckan** usando el Dockerfile hubicado en ckan-img/._
 
-		# Salimos una carpeta hacia atras mediante cd ..
-		$ cd ckan_in_docker/
+		$ cd /tmp/ckan_in_docker/ckan-img
 		$ docker build -t jsalgadowk/ckan:latest .
 
 + Paso 5: _Correr contenedor  de **CKAN**_
 		
-		$ docker run -d --link pg-ckan:db --link solr:solr -p 80:80 jsalgadowk/ckan:latest
+		$ docker run -d --link pg-ckan:db --link solr:solr -p 80:80 --name ckan jsalgadowk/ckan:latest
+
++ Paso 6(Opcional): _Crear usuario administrador **ckan_admin**_
+		
+		$ docker exec -it ckan /usr/lib/ckan/default/bin/paster --plugin=ckan sysadmin add ckan_admin -c /etc/ckan/default/development.ini
 
 --- 
