@@ -1,10 +1,22 @@
 # CKAN Docker
-_El mismo CKAN de siempre pero.. bellamente dockerizado..._
+_El mismo **CKAN** de siempre pero.. bellamente dockerizado...:heart_eyes:_
+
+---
+### Indice:
++ [Que es CKAN?](#que-es-ckan)
++ [Que es DOCKER?](#que-es-docker)
++ [Features](#features)
++ [Prerequisitos](#prerequisitos)
+    + [DOCKER](#docker)
+    + [GIT TOOLs](#git-tools)
++ [Instalacion y Ejecucion de CKAN](#instalacion-y-ejecucion-de-ckan)
+    + [Instalacion Simplificada de CKAN](#instalacion-simplificada-de-ckan)
+    + [Instalacion Avanzada de CKAN](#instalacion-avanzada-de-ckan)
+---
 ## Que es CKAN?
 Comprehensive Knowledge Archive Network (CKAN) es una aplicación web de código abierto para el almacenamiento y la distribución de los datos, tales como hojas de cálculo y los contenidos de las bases de datos. Está inspirado en las capacidades de gestión de paquetes comunes para abrir sistemas operativos, como Linux, y está destinado a ser el "apt-get de Debian para los datos". _Fuente: [wikipedia](https://es.wikipedia.org/wiki/CKAN)_
 
 ## Que es DOCKER?
-
 es un proyecto de código abierto que automatiza el despliegue de aplicaciones dentro de contenedores de software, proporcionando una capa adicional de abstracción y automatización de Virtualización a nivel de sistema operativo en Linux. _Fuente: [wikipedia](https://es.wikipedia.org/wiki/Docker_(software))_
 ## Porque CKAN & Docker?
 _Dios Sabe... Nah! TODO_
@@ -14,8 +26,9 @@ Features:
 
 + CKAN 2.6.
 + Datastore.
++ FileStore.
 + Datapusher.
-+ WSGI.
++ Apache2 & NGINX.
 + Extensiones:
 	+ CKAN-Hierarchy. Mas informacion [aqui](https://github.com/datagovuk/ckanext-hierarchy)
 	+ CKAN-GobArTheme. Ver [Demo](http://http://datos.gob.ar/). Mas Informacion [aqui](https://github.com/gobabiertoAR/datos.gob.ar/blob/master/docs/03_instalacion_tema_visual.md)
@@ -26,11 +39,8 @@ Features:
 ### DOCKER:
 
 + Docker para [OSX](https://docs.docker.com/docker-for-mac).
-
 + Docker para [Ubuntu/Debian](https://github.com/JoseSalgado1024/ckan_in_docker/blob/master/aux-docs/docker_Ubuntu-Debian.md).
-
-+ Docker para [RHEL/CentOS](https://github.com/JoseSalgado1024/ckan_in_docker/blob/master/aux-docs/docker_rhel-centos.md).
-
++ Docker para [RHEL/CentOS](https://github.com/JoseSalgado1024/ckan_in_docker/blob/master/aux-docs/docker_rhel-centos.md).
 + Docker para [Windows](https://docs.docker.com/engine/installation/windows).
 
 
@@ -107,16 +117,3 @@ _Para instalar y ejecutar CKAN-Docker, debemos seguir los siguientes pasos:_
 		$ docker run -d --link pg-ckan:db --link solr:solr -p 80:80 jsalgadowk/ckan:latest
 
 --- 
-
-#### Si..., todo bien.. pero sigo pensando que es muy dificil...
-
-_La idea detras de esta implementacion de CKAN, es que **SOLO** te encargagues de tus datos, nada mas, por tanto, dependiendo de que OS usas, podes seleccionar un script de auto-deploy!_
-
-+ Ubuntu|Debian:
-
-		sudo su -c "cd /tmp && git clone https://github.com/JoseSalgado1024/ckan_in_docker.git && cd /tmp/ckan_in_docker/auto-deploy/ && ./ubuntu-debian_auto-deploy.sh && rm -f -r /tmp/ckan_in_docker"
-
-
-+ RHEL|CentOS:
-
-		sudo su -c "cd /tmp && git clone https://github.com/JoseSalgado1024/ckan_in_docker.git && cd /tmp/ckan_in_docker/auto-deploy/ && ./rhel-centos_auto-deploy.sh && rm -f -r /tmp/ckan_in_docker"
