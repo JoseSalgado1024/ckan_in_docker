@@ -14,8 +14,8 @@ then
 	# No? no importa, lo instalamos! :D
 	install_docker_rhel
 fi
-printf "CKAN esta iniciando... "
 deploy_portal
+printf "CKAN esta iniciando... "
 sleep 1
 if [[ $? -eq 0 ]]; then
 	# OK! veamos como quedo tu portal! :D

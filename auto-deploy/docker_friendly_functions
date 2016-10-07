@@ -124,7 +124,8 @@ deploy_portal (){
 
 
 server_is_running () {
-	if [[ "$#" -gt 0]]; then
+	if [[ "$#" -gt "0" ]] ; 
+		then
 		if ping -c 10 $1; then
     		echo "OK"
 		fi
