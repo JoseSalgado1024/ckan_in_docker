@@ -5,6 +5,7 @@ _El mismo **CKAN** de siempre pero.. bellamente dockerizado...:heart_eyes:_
 ### Indice:
 + [Que es CKAN?](#que-es-ckan)
 + [Que es DOCKER?](#que-es-docker)
++ [Porque CKAN en Docker?](#porque-ckan-en-docker)
 + [Features](#features)
 + [Prerequisitos](#prerequisitos)
     + [DOCKER](#docker)
@@ -18,12 +19,16 @@ _El mismo **CKAN** de siempre pero.. bellamente dockerizado...:heart_eyes:_
 ## Que es CKAN?
 Comprehensive Knowledge Archive Network (CKAN) es una aplicación web de código abierto para el almacenamiento y la distribución de los datos, tales como hojas de cálculo y los contenidos de las bases de datos. Está inspirado en las capacidades de gestión de paquetes comunes para abrir sistemas operativos, como Linux, y está destinado a ser el "apt-get de Debian para los datos". _Fuente: [wikipedia](https://es.wikipedia.org/wiki/CKAN)_
 
+_...Mas informacion sobre CKAN?... Obvio! [Documentacion Oficial de CKAN](http://docs.ckan.org/en/latest/)_
+
 ## Que es DOCKER?
 es un proyecto de código abierto que automatiza el despliegue de aplicaciones dentro de contenedores de software, proporcionando una capa adicional de abstracción y automatización de Virtualización a nivel de sistema operativo en Linux. _Fuente: [wikipedia](https://es.wikipedia.org/wiki/Docker_(software))_
 
-## Porque CKAN & Docker?
+_...Deseas saber mas sobre docker? Genial! Docker posee una documentacion excelente y podes verla [aqui](https://docs.docker.com/)_
 
-_Dios Sabe... Nah! TODO_
+## Porque CKAN en Docker?
+
+_Porque SI! :sunglasses:... Nah! esta en la TODO-LIST!_
 
 ## Con que cuenta esta version de CKAN?
 
