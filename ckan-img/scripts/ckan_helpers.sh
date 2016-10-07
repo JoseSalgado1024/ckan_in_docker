@@ -63,11 +63,11 @@ link_solr_url() {
 #####################################
 
 ckan_ayuda(){
-	printf "ALGO! x1"
-	printf "ALGO! x2"
-	printf "ALGO! x3"
-	printf "ALGO! x4"
-	printf "ALGO! x5"
+	printf "ALGO! x1\n"
+	printf "ALGO! x2\n"
+	printf "ALGO! x3\n"
+	printf "ALGO! x4\n"
+	printf "ALGO! x5\n"
 }
 
 # Listar usuarios todos de CKAN
