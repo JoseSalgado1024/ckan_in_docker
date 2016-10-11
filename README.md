@@ -64,7 +64,6 @@ _Descargar e Instalar desde:_
 
 + Ubuntu/Debian:
 
-		$ sudo su -c "apt-get update && apt-get install -y curl-devel expat-devel gettext-devel openssl-devel zlib-devel"
 		$ sudo su -c "apt-get -y install git-core"
 
 + RHEL/CentOS:
