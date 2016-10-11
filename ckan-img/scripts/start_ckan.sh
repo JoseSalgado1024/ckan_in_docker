@@ -31,6 +31,10 @@ if [ "$exit_code" -eq "0" ] ; then
 	# Disponemos logs de CKAN para ser usada mediante docker logs [docker_container_name]
 	# de esta manera logramos q no finalice el contenedor e incluso, tener una forma rapida de ver los logs.
 	tail -f /var/log/apache2/ckan_default.error.log
+	
+	# Si por alguna razon fallan los logs de CKAN-APACHE, el contenedor seguira vivo y funcional
+	while true; do sleep 1000; done
+
 
 else
 	# Ok.. el mundo ya no es un lugar amigable!

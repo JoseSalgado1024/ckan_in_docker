@@ -2,6 +2,7 @@ DHUB_USER="jsalgadowk"
 CKAN_DI="ckan"
 PG_DI="pg-ckan"
 SOLR_DI="solr"
+HOST_TO_BIND=""
 
 # FONT COLORS & STYLE :D
 R="\x1B[31m"
@@ -126,7 +127,7 @@ print_ckan_status() {
 	echo ""
 	echo "CKAN STATUS:"
 	echo "==========="
-	printf "CKAN corriendo en: \t http://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ckan)\n"
+	printf "CKAN corriendo en: \n\t http://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ckan) [privado]\n\t http://$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}') [publico]\n"
 	printf "DPusher corriendo en: \t http://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ckan):8800\n"
 	printf "PGCKAN corriendo en: \t postgres://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' pg-ckan):5432\n"
 	printf "SOLR corriendo en:  \t http://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' solr):8983\n"
@@ -137,3 +138,19 @@ bcpvf (){
 	# Crear capertas para volumenes
 	mkdir -p $HOME/ckan_volumes/data $HOME/ckan_volumes/config $HOME/ckan_volumes/pgdata
 }
+
+bind_portal(){
+
+	# Si no recibo un host, configuro el ip de la VM
+	if [[ $# -eq 0 ]] ; 
+		then
+	    	HOST_TO_BIND=$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
+	else
+			HOST_TO_BIND=$1
+	fi 
+	/usr/lib/ckan/default/bin/paster --plugin=ckan config-tool /etc/ckan/default/development.ini -e \
+		"ckan.datapusher.url = http://${HOST_TO_BIND}:8800" \
+		"ckan.site_url = http://${HOST_TO_BIND}"
+
+}
+
