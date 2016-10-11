@@ -38,7 +38,6 @@ write_config () {
 }
 
 link_postgres_url() {
-	echo "Linking Park... digo Postgres"
   	local user=$DB_ENV_POSTGRES_USER
   	local pass=$DB_ENV_POSTGRES_PASS
   	local db=$DB_ENV_POSTGRES_DB
@@ -48,7 +47,6 @@ link_postgres_url() {
 }
 
 link_solr_url() {
-	echo "linking Solr"
 	local host=$SOLR_PORT_8983_TCP_ADDR
   	local port=$SOLR_PORT_8983_TCP_PORT
   	echo "http://${host}:${port}/solr/ckan"
@@ -116,6 +114,19 @@ ckan_build_context(){
 	  fi
 	  write_config
 	fi
+}
+
+publicar_ckan (){
+	HOST_TO_BIND=HOST_TO_BIND=$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
+	if [[ $# -gt 0 ]] ; 
+		then
+			# Si recibo un host lo uso, si no, configuro el ip(publica) de la VM
+			HOST_TO_BIND=$1
+	fi 
+	/usr/lib/ckan/default/bin/paster --plugin=ckan config-tool /etc/ckan/default/development.ini -e \
+		"ckan.datapusher.url = http://${HOST_TO_BIND}:8800" \
+		"ckan.site_url = http://${HOST_TO_BIND}"
+
 }
 
 fooTest(){

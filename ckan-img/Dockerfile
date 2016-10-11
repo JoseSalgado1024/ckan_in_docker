@@ -29,6 +29,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
 
 # Crearemos algunas variables de entorno, que nos seran utiles mas tarde
 ENV CKAN_APACHE2_PORT 80
+ENV CKAN_DATAPUSHER_PORT 8800
 ENV CKAN_CONFIG_FILE development.ini
 ENV HOME /root
 ENV CKAN_VERSION 2.5.1  
@@ -79,6 +80,9 @@ VOLUME $CKAN_CONFIG
 
 # Abro el puerto de 80(ad) para Apache
 EXPOSE $CKAN_APACHE2_PORT
+
+# Abro el puerto de 8800(dp) apache.datapusher.wsgi
+EXPOSE $CKAN_DATAPUSHER_PORT
 
 # OK, Limpiamos y nos vamos
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

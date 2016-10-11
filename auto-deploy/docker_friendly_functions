@@ -111,7 +111,7 @@ start_ckan-docker (){
 	printf "║         ${W}INICIANDO PORTAL ${BOLD}CKAN-DOCKER${NORMAL}${C}          ║\n";
 	printf "╚═══════════════════════════════════════════════╝${NORMAL}\n";
   	echo "$PG_DI $SOLR_DI" | xargs -n 1 | while read img; do docker run -d  --name $img $DHUB_USER/$img; done
-  	docker run -d --link $PG_DI:db --link $SOLR_DI:solr -p 80:80 --name $CKAN_DI $DHUB_USER/$CKAN_DI:latest
+  	docker run -d --link $PG_DI:db --link $SOLR_DI:solr -p 80:80  -p 8800:8800--name $CKAN_DI $DHUB_USER/$CKAN_DI:latest
 
 }
 
@@ -124,14 +124,11 @@ deploy_portal (){
 }
 
 print_ckan_status() {
-	echo ""
-	echo "CKAN STATUS:"
-	echo "==========="
+	printf "\nCKAN STATUS:\n==========="
 	printf "CKAN corriendo en: \n\t http://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ckan) [privado]\n\t http://$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}') [publico]\n"
 	printf "DPusher corriendo en: \t http://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ckan):8800\n"
 	printf "PGCKAN corriendo en: \t postgres://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' pg-ckan):5432\n"
-	printf "SOLR corriendo en:  \t http://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' solr):8983\n"
-	echo ""
+	printf "SOLR corriendo en:  \t http://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' solr):8983\n\n"
 }
 
 bcpvf (){
