@@ -51,7 +51,8 @@ RUN ln -s $CKAN_HOME/src/ckan/ckan/config/who.ini $CKAN_CONFIG/who.ini
 RUN mkdir -p $CKAN_HOME $CKAN_CONFIG $CKAN_DATA
 RUN chown www-data:www-data $CKAN_DATA
 RUN chmod u+rwx $CKAN_DATA
-
+RUN touch /tmp/ckan_service.log
+RUN chmod u+rw /tmp/ckan_service.log
 # Instalamos CKAN
 RUN dpkg -i /tmp/python-ckan_2.5-trusty_amd64.deb
 
