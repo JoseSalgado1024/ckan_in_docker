@@ -19,7 +19,7 @@ Documentacion creada y testeada en **Trusty Tahr 14.04 de Ubuntu** y **Jessie 8.
 	sudo apt-get update && sudo apt-get -y upgrade
 
 ### Update apt-get e install docker-engine:
-	sudo apt-get install --upgrade cgroup-lite cgroupfs-mount aufs-tools  libsystemd-journal0 && sudo apt-get update && sudo apt-get -q -y install docker-engine
+	sudo apt-get install docker-engine
 	sudo service docker start
 
 ### Editamos la configuracion de UFW:
