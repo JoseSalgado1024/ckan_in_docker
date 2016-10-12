@@ -21,13 +21,14 @@ init_datastore(){
 }
 
 printf "Inicializando bases de datos... "
+# Configuro e inicializo el plugin "DATASTORE"
+init_datastore
+rids=$?
+
 # Inicializo de la base de datos por omision de CKAN
 init_db
 ridb=$?
 
-# Configuro e inicializo el plugin "DATASTORE"
-init_datastore
-rids=$?
 
 # Sumo los codigos de error para simplificar la evaluacion de los mismos.
 exit_code=$(($ridb + $rids))
