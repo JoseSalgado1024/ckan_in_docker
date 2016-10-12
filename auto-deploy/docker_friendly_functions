@@ -124,8 +124,9 @@ deploy_portal (){
 }
 
 print_ckan_status() {
-	printf "\nCKAN STATUS:\n==========="
-	printf "CKAN corriendo en: \n\t http://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ckan) [privado]\n\t http://$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}') [publico]\n"
+	PUBLIC_IP=$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
+	printf "\nCKAN STATUS:\n===========\n"
+	printf "CKAN corriendo en: \n\t http://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ckan) [privado]\n\t http://${PUBLIC_IP} [publico]\n"
 	printf "DPusher corriendo en: \t http://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ckan):8800\n"
 	printf "PGCKAN corriendo en: \t postgres://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' pg-ckan):5432\n"
 	printf "SOLR corriendo en:  \t http://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' solr):8983\n\n"
