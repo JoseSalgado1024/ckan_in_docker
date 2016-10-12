@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-MAINTAINER Jose A. Salagdo<jose.salgado.wrk@gmail.com>
+MAINTAINER Jose A. Salgado<jose.salgado.wrk@gmail.com>
 
 # Actualizamos las bases de apt-get!
 RUN apt-get -q -y update 
@@ -73,7 +73,7 @@ RUN chmod +x -R $CKAN_INIT/
 RUN chmod 777 -R $CKAN_CONFIG
 
 # Script de inicializacion para ckan.
-CMD ["/etc/ckan_init.d/start_ckan.sh"]
+CMD ["${CKAN_INIT}/start_ckan.sh"]
 
 # Creo un volumen para las configs.
 VOLUME $CKAN_CONFIG
