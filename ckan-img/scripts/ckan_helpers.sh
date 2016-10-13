@@ -131,6 +131,7 @@ publicar_ckan (){
 
 fooTest(){
 	echo "friendly-ckan tools instaladas!"
+	ckan_ayuda
 } 
 
 fooTest

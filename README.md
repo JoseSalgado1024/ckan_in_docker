@@ -115,7 +115,8 @@ _Es recomendable clonar el repo dentro de /tmp (o C:\temp en **Windows X**), dad
 
 		$ cd /tmp/ckan_in_docker/postgresql-img/
 		$ docker build -t jsalgadowk/postgresql:latest .
-		$ docker run -d  --name pg-ckan jsalgadowk/pg-ckan:latest
+		$ docker run -d  --name pg-ckan \
+			jsalgadowk/pg-ckan:latest
 
 
 + Paso 3: _construir y lanzar el contenedor de **Solr** usando el Dockerfile hubicado en **solr-img/**._
@@ -131,7 +132,13 @@ _Es recomendable clonar el repo dentro de /tmp (o C:\temp en **Windows X**), dad
 
 + Paso 5: _Correr contenedor  de **CKAN**_
 		
-		$ docker run -d --link pg-ckan:db --link solr:solr -p 80:80 --name ckan jsalgadowk/ckan:latest
+		$ docker run -d \
+			--link pg-ckan:db \
+			--link solr:solr \
+			-p 80:80 \
+			-p 8800:8800 \
+			--name ckan \
+			jsalgadowk/ckan:latest
 
 + Paso 6(Opcional): _Crear usuario administrador **ckan_admin**_
 		
