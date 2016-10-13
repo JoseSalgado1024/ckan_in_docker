@@ -1,15 +1,26 @@
 FROM ubuntu:14.04
 MAINTAINER Jose A. Salgado<jose.salgado.wrk@gmail.com>
 
-# Actualizamos las bases de apt-get!
-RUN apt-get -q -y update 
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common
-RUN add-apt-repository universe
-RUN DEBIAN_FRONTEND=noninteractive apt-get update
+# Crearemos algunas variables de entorno, que nos seran utiles mas tarde
+#ENV DEBIAN_FRONTEND noninteractive
+ENV CKAN_APACHE2_PORT 80
+ENV CKAN_DATAPUSHER_PORT 8800
+ENV CKAN_CONFIG_FILE development.ini
+ENV HOME /root
+ENV CKAN_VERSION 2.5.1  
+ENV CKAN_HOME /usr/lib/ckan/default
+ENV CKAN_CONFIG /etc/ckan/default
+ENV CKAN_DATA /var/lib/ckan
+ENV CKAN_INIT /etc/ckan_init.d
+
+# Actualizamos las bases de apt-get!
+RUN apt-get -y update && \
+      apt-get install -y software-properties-common && \
+      add-apt-repository universe
 
 # Instalamos la Herramientas que vamos a requerir
-RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
+RUN apt-get -y install \
             libevent-dev \
             libpq-dev \
             nginx \
@@ -27,33 +38,23 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
             ca-certificates \
             git-core
 
-# Crearemos algunas variables de entorno, que nos seran utiles mas tarde
-ENV CKAN_APACHE2_PORT 80
-ENV CKAN_DATAPUSHER_PORT 8800
-ENV CKAN_CONFIG_FILE development.ini
-ENV HOME /root
-ENV CKAN_VERSION 2.5.1  
-ENV CKAN_HOME /usr/lib/ckan/default
-ENV CKAN_CONFIG /etc/ckan/default
-ENV CKAN_DATA /var/lib/ckan
-ENV CKAN_INIT /etc/ckan_init.d
+# Bajamos el .deb de ckan
+RUN wget http://packaging.ckan.org/python-ckan_2.5-trusty_amd64.deb -P /tmp
 
 # Instalamos psql
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y update
-RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install pgadmin3
+RUN apt-get -y update && apt-get -y install pgadmin3
 
 
-# Bajamos el .deb de ckan
 RUN mkdir -p $CKAN_HOME $CKAN_CONFIG $CKAN_DATA
 RUN virtualenv $CKAN_HOME
-RUN wget http://packaging.ckan.org/python-ckan_2.5-trusty_amd64.deb -P /tmp
 RUN ln -s $CKAN_HOME/src/ckan/ckan/config/who.ini $CKAN_CONFIG/who.ini
 RUN mkdir -p $CKAN_HOME $CKAN_CONFIG $CKAN_DATA
 RUN chown www-data:www-data $CKAN_DATA
 RUN chmod u+rwx $CKAN_DATA
 RUN touch /tmp/ckan_service.log
 RUN chmod u+rw /tmp/ckan_service.log
+
 # Instalamos CKAN
 RUN dpkg -i /tmp/python-ckan_2.5-trusty_amd64.deb
 
@@ -73,16 +74,13 @@ RUN chmod +x -R $CKAN_INIT/
 RUN chmod 777 -R $CKAN_CONFIG
 
 # Script de inicializacion para ckan.
-CMD ["${CKAN_INIT}/start_ckan.sh"]
+CMD ["/etc/ckan_init.d/start_ckan.sh"]
 
-# Creo un volumen para las configs.
-VOLUME $CKAN_CONFIG
+# Creo volumenes para las diferentes de CKAN.
+VOLUME $CKAN_CONFIG CKAN_DATA CKAN_DATA
 
-# Abro el puerto de 80(ad) para Apache
-EXPOSE $CKAN_APACHE2_PORT
-
-# Abro el puerto de 8800(dp) apache.datapusher.wsgi
-EXPOSE $CKAN_DATAPUSHER_PORT
+# Abro el puerto de 80(ad) para Apache y el puerto de 8800(dp) apache.datapusher.wsgi
+EXPOSE $CKAN_APACHE2_PORT $CKAN_DATAPUSHER_PORT
 
 # OK, Limpiamos y nos vamos
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
