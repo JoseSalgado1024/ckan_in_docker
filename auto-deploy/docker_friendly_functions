@@ -104,7 +104,7 @@ install_docker_rhel(){
 	sudo su -c "groupadd docker"
 	# Paso 7: añadir tu usuario al grupo antes creado.
 	sudo usermod -aG docker $(id -u -n)
-}
+}	
 
 start_ckan-docker (){
 	printf "${C}╔════════════════════════════════════════ ${B}■${C} ${W}■${C} ${B}■${C} ╗\n";
@@ -149,9 +149,10 @@ bind_portal(){
 	else
 			HOST_TO_BIND=$1
 	fi 
+	docker exec -it ckan service nginx stop && service apache2 stop; 
 	docker exec -it ckan /usr/lib/ckan/default/bin/paster --plugin=ckan config-tool /etc/ckan/default/development.ini -e \
 		"ckan.datapusher.url = http://${HOST_TO_BIND}:8800" \
 		"ckan.site_url = http://${HOST_TO_BIND}"
-
+	docker exec -it ckan service nginx start && service apache2 start; 
 }
 
