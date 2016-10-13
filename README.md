@@ -142,6 +142,8 @@ _Es recomendable clonar el repo dentro de /tmp (o C:\temp en **Windows X**), dad
 
 + Paso 6(Opcional): _Crear usuario administrador **ckan_admin**_
 		
-		$ docker exec -it ckan /usr/lib/ckan/default/bin/paster --plugin=ckan sysadmin add ckan_admin -c /etc/ckan/default/development.ini
+		$ docker exec -it ckan \
+			/usr/lib/ckan/default/bin/paster --plugin=ckan sysadmin add ckan_admin \
+			-c /etc/ckan/default/development.ini
 
 --- 

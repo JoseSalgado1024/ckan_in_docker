@@ -61,11 +61,15 @@ link_solr_url() {
 #####################################
 
 ckan_ayuda(){
-	printf "ALGO! x1\n"
-	printf "ALGO! x2\n"
-	printf "ALGO! x3\n"
-	printf "ALGO! x4\n"
-	printf "ALGO! x5\n"
+	printf "Herramientas amigables de CKAN:\n"
+	printf "==============================\n"
+	printf "ckan_list_users:\n\t Listar todos los usuarios de posee actualmente CKAN\n\tUso: $ ckan_list_users"
+	printf "ckan_add_admin:\n\t Crear un usuario administrador para ckan\n\tUso: $ ckan_add_admin \"nombre_de_usuario\" o $ ckan_add_admin"
+	printf "ckan_init_db:\n\tInicializa las bases de datos de CKAN, version simplificada de \"$ paster  --plugin=ckan db init -c  /archivo/de/configuracion.ini\"\n\tUso $ ckan_init_db"
+	printf "publicar_ckan:\n\tActualiza la url del sitio, puede usarse con IP o URLs\n\tUso: $ publicar_ckan xxx.xxx.xxx.xxx o $ publicar_ckan www.mihost.xxx"
+	printf "ckan_build_context:\n\tCrea contexto funcional para CKAN\n\tUso: $ ckan_build_context"
+	printf "write_config:\n\tCrea archivo de configuracion para CKAN\n\tUso $write_config \"/nuevo/archivo/de/configuracion.ini\""
+	printf "ckan_ayuda\n\tMuestra ayuda sobre las herramientas amigables de CKAN."
 }
 
 # Listar usuarios todos de CKAN
@@ -122,10 +126,12 @@ publicar_ckan (){
 		then
 			# Si recibo un host lo uso, si no, configuro el ip(publica) de la VM
 			HOST_TO_BIND=$1
-	fi 
+	fi
+	service apache2 stop && service nginx stop 
 	/usr/lib/ckan/default/bin/paster --plugin=ckan config-tool /etc/ckan/default/development.ini -e \
 		"ckan.datapusher.url = http://${HOST_TO_BIND}:8800" \
 		"ckan.site_url = http://${HOST_TO_BIND}"
+	service apache2 start && service nginx start
 
 }
 
