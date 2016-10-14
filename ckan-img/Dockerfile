@@ -69,7 +69,6 @@ ADD ./requirements/ckan_default.conf /etc/apache2/sites-enabled/ckan_default.con
 ADD ./scripts $CKAN_INIT
 ADD ./requirements/apache.wsgi $CKAN_CONFIG/apache.wsgi
 ADD ./requirements/datapusher.wsgi /etc/ckan/datapusher.wsgi
-ADD ./requirements/rc.local /etc/rc.local
 RUN chmod +x -R $CKAN_INIT/
 RUN chmod 777 -R $CKAN_CONFIG
 
