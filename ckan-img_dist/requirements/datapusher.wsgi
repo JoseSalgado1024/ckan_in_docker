@@ -9,6 +9,6 @@ import ckanserviceprovider.web as web
 os.environ['JOB_CONFIG'] = '/etc/ckan/datapusher_settings.py'
 web.init()
 
-# import datapusher.jobs as jobs
+import datapusher.jobs as jobs
 
 application = web.app
