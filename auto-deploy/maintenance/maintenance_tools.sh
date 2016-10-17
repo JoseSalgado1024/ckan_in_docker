@@ -1,39 +1,11 @@
 #!/bin/bash
-#
-# TODO LIST
-#
-#   manetenimiento 
-#        usuarios
-#            add
-#            delete
-#            list
-#
-#        actualizacion
-#            horario
-#            activar/desactivar
-#
-#        bases-de-datos
-#            dump
-#            init 
-#            clear
-#
-#        backup
-#            horario
-#            activar/desactivar
-#            destino
-#
-#       app
-#           start
-#            stop
-#            restart
-
+clear
 
 .mostrar_ayuda (){
+clear
 printf \
-"\n
-+---------------------------------------------------+
-|    Herramientas simplificadas de manetenimiento   |
-+---------------------------------------------------+
+"AYUDA:
+======
 
 USUARIOS:
 Crear, listar o borrar usuarios de CKAN: --usuario=accion parametro o -u=accion parametro 
@@ -68,8 +40,47 @@ Activar, desactivar backups automaticos para el contenido de CKAN: --backup=acci
 
     Activar backup: --backup=start /carpeta/de/destino o -bu=start /carpeta/de/destino      
     Desactivar backup: --backup=stop o -bu=stop
-
 \n" 
+}
+
+.user_afunctions(){
+    # ADD | DEL | LIST    
+    printf "\nFunciones de adminstracion de usuarios\n"
+    p_actions="add del list"
+    [[ $p_actions =~ $1 ]] && echo "Accion: $1" || echo "Opcion no reconocida..."
+    echo ""
+}
+
+.app_afunctions(){
+    # START | STOP | RESTART | REMOVE
+    printf "\nFunciones de adminstracion de Aplicacion CKAN\n"
+    p_actions="start stop restart remove"
+    [[ $p_actions =~ $1 ]] && echo "Accion: $1" || echo "Opcion no reconocida..."
+    echo ""
+}
+
+.update_afunctions(){
+    # START | STOP    
+    printf "\nFunciones de Actualizacion\n"
+    p_actions="start stop"
+    [[ $p_actions =~ $1 ]] && echo "Accion: $1" || echo "Opcion no reconocida..."
+    echo ""
+}
+
+.backup_afunctions(){
+    # START | STOP
+    printf "\nFunciones de adminstracion de backups\n"
+    p_actions="start stop"
+    [[ $p_actions =~ $1 ]] && echo "Accion: $1" || echo "Opcion no reconocida..."
+    echo ""
+}
+
+.database_afunctions(){
+    # INIT | DUMP | CLEAR    
+    printf "\nFunciones de adminstracion de bases de datos\n"
+    p_actions="init dump clear"
+    [[ $p_actions =~ $1 ]] && echo "Accion: $1" || echo "Opcion no reconocida..."
+    echo ""
 }
 
 
@@ -81,33 +92,38 @@ case $1 in
     -u=*|--usuario=*)
     ACTION="Usuarios"
     VALUE="${1#*=}"
+    .user_afunctions $VALUE
     ;;
 
     -a=*|--actualizar=*)
     ACTION="Actualizacion"
     VALUE="${1#*=}"
+    .update_afunctions $VALUE
     ;;
 
     -db=*|--bases-de-datos=*)
     ACTION="Base de Datos"
     VALUE="${1#*=}"
+    .database_afunctions $VALUE
     ;;
 
     -ckan=*|--ckan=*)
     ACTION="CKAN"
     VALUE="${1#*=}"
+    .app_afunctions $VALUE
     ;;
 
     -b=*|--backup=*)
     ACTION="Backup"
     VALUE="${1#*=}"
+    .backup_afunctions $VALUE
     ;;
 
     -h | --help)
     ACTION="Ayuda"
     VALUE="Mostrar ayuda"
     .mostrar_ayuda
-    ;;
+    ;;  
 esac
 
 if echo "$ACTION" | grep "NONE"; then 
