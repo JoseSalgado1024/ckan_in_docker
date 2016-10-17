@@ -1,6 +1,30 @@
 #!/bin/bash
 clear
 
+# CONFIGS
+DHUB_USER="jsalgadowk"
+CKAN_DI="ckan"
+PG_DI="pg-ckan"
+SOLR_DI="solr"
+MAINTENACE_TIME="15 3 * * * "  
+
+# FONT COLORS & STYLE :D
+R="\x1B[31m"
+G="\x1B[29m"
+GG="\x1B[32m"
+B="\x1B[34m"
+Y="\x1B[33m"
+W="\x1B[37m"
+BL="\x1B[30m"
+V="\x1B[35m"
+C="\x1B[36m"
+BOLD=$(tput bold)
+NORMAL=$(tput sgr0)
+
+.get_ip(){
+    echo $(ifconfig $(route | grep '^default' | grep -o '[^ ]*$') | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
+}
+
 .mostrar_ayuda (){
 clear
 printf \
@@ -43,6 +67,21 @@ Activar, desactivar backups automaticos para el contenido de CKAN: --backup=acci
 \n" 
 }
 
+abort () {
+  echo "$@" >&2
+  echo ""
+  exit 1
+}
+
+.install_cron () {
+    if [[ $# -gt 0 ]]; then
+        cat <(crontab -l) <(echo "$1") | crontab -
+    else
+        abort "Imposible crear entrada en crontabs... "
+    fi
+}
+
+
 .user_afunctions(){
     # ADD | DEL | LIST    
     printf "\nFunciones de adminstracion de usuarios\n"
@@ -51,6 +90,7 @@ Activar, desactivar backups automaticos para el contenido de CKAN: --backup=acci
     echo ""
 }
 
+# FUNCIONES DE APP(CKAN)
 .app_afunctions(){
     # START | STOP | RESTART | REMOVE
     printf "\nFunciones de adminstracion de Aplicacion CKAN\n"
@@ -59,13 +99,58 @@ Activar, desactivar backups automaticos para el contenido de CKAN: --backup=acci
     echo ""
 }
 
+
+# Bindear ckan(inside-container --> Intenet)
+.app_bind(){
+    # Si no recibo un host, configuro el ip de la VM
+    if [[ $# -eq 0 ]] ; 
+        then
+            HOST_TO_BIND=$(.get_ip)
+    else
+            HOST_TO_BIND=$1
+    fi 
+    docker exec -it $CKAN_DI service nginx stop
+    docker exec -it $CKAN_DI service apache2 stop; 
+    docker exec -it $CKAN_DI /usr/lib/ckan/default/bin/paster --plugin=ckan config-tool /etc/ckan/default/development.ini -e  "ckan.datapusher.url = http://${HOST_TO_BIND}:8800" "ckan.site_url = http://${HOST_TO_BIND}"
+    docker exec -it $CKAN_DI service nginx start
+    docker exec -it $CKAN_DI service apache2 start; 
+}
+
+
+.app_start(){
+    # Lanzamos todo de nuevo:
+    echo $PG_DI $SOLR_DI | xargs -n 1 | while read img; do docker run -d --name $img $DHUB_USER/$img:latest; done
+    docker run -d --link solr:solr --link pg-ckan:db -p 80:80 -p 8800:8800 --name $CKAN_DI $DHUB_USER/$CKAN_DI:latest
+    .app_bind
+}
+
 # FUNCIONES DE ACTUALIZACION
 .update_afunctions(){
-    # START | STOP    
-    printf "\nFunciones de Actualizacion\n"
-    p_actions="start stop"
-    [[ $p_actions =~ $1 ]] && echo "Accion: $1" || echo "Opcion no reconocida..."
-    echo ""
+    # START | STOP | RUN   
+    EXEC="NONE"
+    printf "
+\n
+Funciones de Actualizacion:
+==========================\n\n"
+    p_actions="start stop run"
+    [[ $p_actions =~ $1 ]] && EXEC=$1 || abort "Opcion no reconocida..."
+    
+    case $1 in
+        "start")
+        echo "Funciones de actualizacion [START]"
+        echo "Instalando en crontabs: \"15 3 * * * sh maintenance_tools.sh -a=run\""
+        cat <(crontab -l) <(echo "15 3 * * * sh maintenance_tools.sh -a=run") | crontab -
+        ;;
+
+        "stop")
+        echo "Funciones de actualizacion [STOP]"
+        cat <(crontab -l) | grep -v "maintenance_tools.sh" | crontab -
+        ;;
+
+        "run")
+        echo "Funciones de actualizacion [RUN]"
+        ;;
+    esac
 }
 
 # Update gobAR Theme
@@ -75,6 +160,26 @@ Activar, desactivar backups automaticos para el contenido de CKAN: --backup=acci
     sudo docker exec -it ckan su -c "cd /usr/lib/ckan/default/src/ckanext-gobar-theme/ && git pull"
     sudo docker exec -it ckan service apache2 start 
     sudo docker exec -it service nginx start
+}
+# Instalar updates...
+.update_install(){
+:
+}
+
+# Correr actualizaciones.
+.update_run(){
+    .update_containers
+    .update_theme
+}
+
+# Update de contenedores.
+.update_containers(){
+    # Elimino todos los contenedores:
+    echo $CKAN_DI $PG_DI $SOLR_DI | xargs -n 1 | while read img; do docker rm -f $img; done
+    # Pull a todos los contenedores:
+    echo $CKAN_DI $PG_DI $SOLR_DI | xargs -n 1 | while read img; do docker pull $DHUB_USER/$img:latest; done
+    # Run ckan... run! XD
+    .app_start
 }
 
 .backup_afunctions(){
@@ -93,10 +198,21 @@ Activar, desactivar backups automaticos para el contenido de CKAN: --backup=acci
     echo ""
 }
 
+valid_args (){
+    for i in "$@"
+    do
+    :
+    done
+
+}
+
 
 DEFAULT=NOT
 ACTION="NONE"
 VALUE="NONE"
+POSIBLE_ACTIONS="-u=* --usuario=* a=* --actualizar=* -db=* --bases-de-datos=* -b=* --backup=* -h --help"
+
+# [[ $POSIBLE_ACTIONS =~ $1 ]] && echo "" || abort "Opcion no reconocida..."
 
 case $1 in
     -u=*|--usuario=*)
@@ -135,7 +251,3 @@ case $1 in
     .mostrar_ayuda
     ;;  
 esac
-
-if echo "$ACTION" | grep "NONE"; then 
-    echo "Opcion ingresada no valida..."
-fi 
