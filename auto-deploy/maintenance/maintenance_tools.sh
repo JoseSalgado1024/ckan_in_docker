@@ -59,12 +59,22 @@ Activar, desactivar backups automaticos para el contenido de CKAN: --backup=acci
     echo ""
 }
 
+# FUNCIONES DE ACTUALIZACION
 .update_afunctions(){
     # START | STOP    
     printf "\nFunciones de Actualizacion\n"
     p_actions="start stop"
     [[ $p_actions =~ $1 ]] && echo "Accion: $1" || echo "Opcion no reconocida..."
     echo ""
+}
+
+# Update gobAR Theme
+.update_theme (){
+    sudo docker exec -it ckan service apache2 stop 
+    sudo docker exec -it ckan service nginx stop
+    sudo docker exec -it ckan su -c "cd /usr/lib/ckan/default/src/ckanext-gobar-theme/ && git pull"
+    sudo docker exec -it ckan service apache2 start 
+    sudo docker exec -it service nginx start
 }
 
 .backup_afunctions(){
