@@ -135,6 +135,6 @@ bind_portal(){
 			HOST_TO_BIND=$1
 	fi 
 	docker exec -it ckan /usr/lib/ckan/default/bin/paster --plugin=ckan config-tool /etc/ckan/default/development.ini -e "ckan.datapusher.url = http://${HOST_TO_BIND}:8800" "ckan.site_url = http://${HOST_TO_BIND}"
-	docker exec -it ckan service apache2 reload;
-	docker exec -it ckan service apache2 start; 
+	#docker exec -it ckan service apache2 reload;
+	#docker exec -it ckan service apache2 start; 
 }
