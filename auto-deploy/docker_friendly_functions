@@ -111,7 +111,15 @@ bind_portal(){
 }
 
 clean_old_install (){
-	echo "Eliminando instalaciones previas..."
-	echo $CKAN_DI $PG_DI $SOLR_DI | xargs -n 1 | while read img; do docker rm -f $img; done
+	echo "Eliminando instalaciones previas si existen..."
+	for i in $"$CKAN_DI $PG_DI $SOLR_DI"
+	do
+		staus=$(docker inspect --format="{{ .State.Status }}" $img 2> /dev/null)
+		if [ -z "$staus" ];
+			then
+			echo "Eliminando version antigua de $i"
+			do docker rm -f $i	
+		fi
+	done
 	echo "continuando instalacion..."
 }
