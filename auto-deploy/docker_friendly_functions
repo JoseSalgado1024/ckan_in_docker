@@ -112,13 +112,14 @@ bind_portal(){
 
 clean_old_install () {
 	echo "Eliminando instalaciones previas si existen..."
-	for i in $"$CKAN_DI $PG_DI $SOLR_DI"
+	CONTAINERS="$CKAN_DI $PG_DI $SOLR_DI"
+	for i in $CONTAINERS
 	do
 		staus=$(docker inspect --format="{{ .State.Status }}" $img 2> /dev/null)
 		if [ -z "$staus" ];
 			then
-			echo "Eliminando version antigua de $i"
-			docker rm -f $i	
+			printf "Eliminando version antigua de $i..."
+			[[ docker rm -f $i ]] && printf " [OK]\n" || printf " [FALLO]\n"	
 		fi
 	done
 	echo "continuando instalacion..."
