@@ -74,8 +74,7 @@ start_ckan-docker (){
   			 $HOME/ckan/volumenes/data
   	
   	docker run -d \
-  		-v $HOME/ckan/volumenes/data:$CKAN_DATA \
-  		-v $HOME/ckan/volumenes/home:$CKAN_CONFIG \
+  		-v $HOME/ckan/volumenes/data:/var/lib/ckan \
   		--link $PG_DI:db \
   		--link $SOLR_DI:solr \
   		-p 80:80 \
