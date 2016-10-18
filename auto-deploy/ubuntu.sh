@@ -32,11 +32,13 @@ get_ip(){
 }
 
 clear 
-printf "\n$W╔═════════════════════════════════════════════════════════╗\n"
-printf "$W║                                                       $B▓███▓▒░\n"
-printf "$W║     ${W}BIENVENIDO A LA INSTALACION AUTOMATICA DE ${BOLD}CKAN${NORMAL}    $W▓███▓▒░\n"
-printf "$W║                ${W}EN DOCKER ${BOLD}UBUNTU|DEBIAN${NORMAL}.               $B▓███▓▒░\n"
-printf "$W╚═════════════════════════════════════════════════════════╝\n"
+printf "\n
+╔═════════════════════════════════════════════════════════╗\n
+║                                                         ║\n
+║     BIENVENIDO A LA INSTALACION AUTOMATICA DE CKAN      ║\n
+║                EN DOCKER UBUNTU|DEBIAN.                 ║\n
+║                                                         ║\n
+╚═════════════════════════════════════════════════════════╝\n"
 # Esta docker insalado?	
 if [ $(dpkg-query -W -f='${Status}' docker-engine 2>/dev/null | grep -c "ok installed") -eq 0 ];
 then
@@ -46,7 +48,8 @@ then
 fi
 # Instalemos CKAN! :D
 echo "$CKAN_DI $PG_DI $SOLR_DI" | xargs -n 1 | while read img; do docker rm -f $img; done
-echo $CKAN_DI $PG_DI $SOLR_DI | xargs -n 1 | while read img; do docker pull $DHUB_USER/$img:latest; done
+echo "$CKAN_DI $PG_DI $SOLR_DI" | xargs -n 1 | while read img; do docker pull $DHUB_USER/$img:latest; done
 mkdir -p $HOME/ckan/volumenes/data $HOME/ckan/volumenes/config $HOME/ckan/volumenes/pgdata
 echo "$PG_DI $SOLR_DI" | xargs -n 1 | while read img; do docker run -d  --name $img $DHUB_USER/$img; done
-docker run -d -v $HOME/ckan/volumenes/data:/var/lib/ckan --link $PG_DI:db --link $SOLR_DI:solr -p 80:80 -p 8800:8800 --name $CKAN_DI $DHUB_USER/$CKAN_DI:latest
+docker run -dit -v $HOME/ckan/volumenes/data:/var/lib/ckan --link $PG_DI:db --link $SOLR_DI:solr -p 80:80 -p 8800:8800 --name $CKAN_DI $DHUB_USER/$CKAN_DI:latest
+
