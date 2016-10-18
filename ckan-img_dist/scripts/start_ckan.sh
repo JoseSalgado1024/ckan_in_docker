@@ -28,7 +28,7 @@ if [ "$exit_code" -eq "0" ] ; then
 	service apache2 stop && service nginx stop;
 	service apache2 start && service apache2 reload && service apache2 restart && service nginx restart;
 	
-	# Si por alguna razon fallan los logs de CKAN-APACHE, el contenedor seguira vivo y funcional
+	# Si por alguna razon fallan los logs detenemos CKAN-APACHE, el contenedor seguira vivo y funcional
 	while true; do sleep 1000; done
 
 
