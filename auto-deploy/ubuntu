@@ -37,6 +37,6 @@ echo "$CKAN_DI $PG_DI $SOLR_DI" | xargs -n 1 | while read img; do docker rm -f $
 echo "$CKAN_DI $PG_DI $SOLR_DI" | xargs -n 1 | while read img; do docker pull $DHUB_USER/$img:latest; done
 mkdir -p $HOME/ckan/volumenes/data $HOME/ckan/volumenes/config $HOME/ckan/volumenes/pgdata
 echo "$PG_DI $SOLR_DI" | xargs -n 1 | while read img; do docker run -d  --name $img $DHUB_USER/$img; done
-docker run -dit -v $HOME/ckan/volumenes/data:/var/lib/ckan --link $PG_DI:db --link $SOLR_DI:solr -p 80:80 -p 8800:8800 --name $CKAN_DI $DHUB_USER/$CKAN_DI:latest
+docker run -d -v $HOME/ckan/volumenes/data:/var/lib/ckan --link $PG_DI:db --link $SOLR_DI:solr -p 80:80 -p 8800:8800 --name $CKAN_DI $DHUB_USER/$CKAN_DI:latest
 echo "bindeando CKAN..."
 docker exec -it ckan /usr/lib/ckan/default/bin/paster --plugin=ckan config-tool /etc/ckan/default/development.ini -e "ckan.datapusher.url = http://$(get_ip):8800" "ckan.site_url = http://$(get_ip)"	
