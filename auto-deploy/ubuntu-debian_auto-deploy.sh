@@ -11,7 +11,7 @@ printf "$W╚══════════════════════�
 if [ $(dpkg-query -W -f='${Status}' docker-engine 2>/dev/null | grep -c "ok installed") -eq 0 ];
 then
 	# No? no importa, lo instalamos! :D
-	install_docker_debian
+	install_docker
 fi
 # Instalemos CKAN! :D
 deploy_portal

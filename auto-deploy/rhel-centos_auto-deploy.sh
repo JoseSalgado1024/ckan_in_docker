@@ -12,7 +12,7 @@ printf "$W╚══════════════════════�
 if [ $(dpkg-query -W -f='${Status}' docker-engine 2>/dev/null | grep -c "ok installed") -eq 0 ];
 then
 	# No? no importa, lo instalamos! :D
-	install_docker_rhel
+	install_docker
 fi
 deploy_portal
 printf "CKAN esta iniciando... "
