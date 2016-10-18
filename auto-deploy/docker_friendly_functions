@@ -68,18 +68,19 @@ start_ckan-docker (){
 }
 
 clean_old_install () {
-	echo "Eliminando instalaciones previas si existen..."
-	CONTAINERS=($CKAN_DI $PG_DI $SOLR_DI)
-	for i in $CONTAINERS
-	do
-		status=$(docker inspect --format="{{ .State.Status }}" $i 2> /dev/null)
-		if [ -z "$status" ];
-			then
-			printf "Eliminando version antigua de $i..."
-			[[ docker rm -f $i ]] && printf " [OK]\n" || printf " [FALLO]\n"	
-		fi
-	done
-	echo "continuando instalacion..."
+#	echo "Eliminando instalaciones previas si existen..."
+#	CONTAINERS=($CKAN_DI $PG_DI $SOLR_DI)
+#	for i in $CONTAINERS
+#	do
+#		status=$(docker inspect --format="{{ .State.Status }}" $i 2> /dev/null)
+#		if [ -z "$status" ];
+#			then
+#			printf "Eliminando version antigua de $i..."
+#			[[ docker rm -f $i ]] && printf " [OK]\n" || printf " [FALLO]\n"	
+#		fi
+#	done
+#	echo "continuando instalacion..."
+echo "$PG_DI $SOLR_DI" | xargs -n 1 | while read img; do docker rm -f $img; done
 }
 
 deploy_portal (){
