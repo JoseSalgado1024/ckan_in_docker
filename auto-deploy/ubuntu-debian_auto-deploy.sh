@@ -26,11 +26,22 @@ if [[ $? -eq 0 ]]; then
 	printf \
 "Bien! hasta ahora tenes todo instalado y funcional, solo hacen falta dos \"pasitos\" mas y estaria listo tu ckan.
 1) Bindear tu ckan con internet, esto se refiere a que configures tu url dentro de CKAN, puede ser un ip o una direccion humana, es facil, se hace asi:
+
+	Si tu url es un ip, ej: 123.456.654.321
     docker exec ckan /usr/lib/ckan/default/bin/paster --plugin=ckan config-tool /etc/ckan/default/development.ini -e \
-    \"ckan.datapusher.url = http://107.170.63.220:8800\" \
-    \"ckan.site_url = http://107.170.63.220\"
+    \"ckan.datapusher.url = http://123.456.654.321:8800\" \
+    \"ckan.site_url = http://123.456.654.321\"
+
+    Si usas una url del tipo: \"mi_ckan.com\", deberias configurarla de la siguiente manera:
+    docker exec ckan /usr/lib/ckan/default/bin/paster --plugin=ckan config-tool /etc/ckan/default/development.ini -e \
+    \"ckan.datapusher.url = http://mi_ckan.com:8800\" \
+    \"ckan.site_url = http://mi_ckan.com\"
+
 2) Crear usuario \"ckan_admin\" para que puedas crear tus objetos dentro de ckan, lo haces asi:
-	docker exec ckan /usr/lib/ckan/default/bin/paster --plugin=ckan sysadmin add ckan_admin -c /etc/ckan/default/development.in"
+	docker exec ckan /usr/lib/ckan/default/bin/paster --plugin=ckan sysadmin add ckan_admin -c /etc/ckan/default/development.ini
+
+...Y listo! ya podes contarle a todo el mundo que tenes un ckan muy bonito para compartir tus recursos! 
+"
 else
 	printf "[FALLO]\nOops... Algo se rompio...\n"
 fi
