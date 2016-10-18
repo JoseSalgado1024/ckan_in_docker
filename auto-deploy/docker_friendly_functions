@@ -3,6 +3,12 @@ CKAN_DI="ckan"
 PG_DI="pg-ckan"
 SOLR_DI="solr"
 HOST_TO_BIND=""
+CKAN_APACHE2_PORT="80"
+CKAN_DATAPUSHER_PORT="8800"
+CKAN_CONFIG_FILE="development.ini"
+ENV CKAN_HOME="/usr/lib/ckan/default"
+ENV CKAN_CONFIG="/etc/ckan/default"
+ENV CKAN_DATA="/var/lib/ckan"
 
 # FONT COLORS & STYLE :D
 R="\x1B[31m"
@@ -63,7 +69,19 @@ start_ckan-docker (){
 	printf "║         ${W}INICIANDO PORTAL ${BOLD}CKAN-DOCKER${NORMAL}${C}          ║\n";
 	printf "╚═══════════════════════════════════════════════╝${NORMAL}\n";
   	echo "$PG_DI $SOLR_DI" | xargs -n 1 | while read img; do docker run -d  --name $img $DHUB_USER/$img; done
-  	docker run -d --link $PG_DI:db --link $SOLR_DI:solr -p 80:80  -p 8800:8800 --name $CKAN_DI $DHUB_USER/$CKAN_DI:latest
+  	mkdir -p $HOME/ckan/volumenes/config \
+  			 $HOME/ckan/volumenes/home \
+  			 $HOME/ckan/volumenes/data
+  	
+  	docker run -d \
+  		-v $HOME/ckan/volumenes/data:$CKAN_DATA \
+  		-v $HOME/ckan/volumenes/home:$CKAN_CONFIG \
+  		--link $PG_DI:db \
+  		--link $SOLR_DI:solr \
+  		-p 80:80 \
+  		-p 8800:8800 \
+  		--name $CKAN_DI \
+  		$DHUB_USER/$CKAN_DI:latest
 
 }
 
@@ -110,7 +128,6 @@ get_ip(){
 }
 
 bind_portal(){
-
 	# Si no recibo un host, configuro el ip de la VM
 	if [[ $# -eq 0 ]] ; 
 		then
