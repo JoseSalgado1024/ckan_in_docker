@@ -85,7 +85,7 @@ echo "$PG_DI $SOLR_DI" | xargs -n 1 | while read img; do docker rm -f $img; done
 
 deploy_portal (){
 	# Paso 1: por las dudas elimino los contenedores...
-	#clean_old_install
+	clean_old_install
 	# Paso 2: Descargo todos lo contenedores necesarios.
 	docker_pull_all_containers
 	# Paso 3: Run CKAN!
