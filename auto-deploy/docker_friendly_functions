@@ -101,9 +101,17 @@ bind_portal(){
 	else
 			HOST_TO_BIND=$1
 	fi 
-	docker exec -it ckan service nginx stop && service apache2 stop; 
+	docker exec -it ckan service nginx stop
+	docker exec -it ckan service apache2 stop; 
 	docker exec -it ckan /usr/lib/ckan/default/bin/paster --plugin=ckan config-tool /etc/ckan/default/development.ini -e \
 		"ckan.datapusher.url = http://${HOST_TO_BIND}:8800" \
 		"ckan.site_url = http://${HOST_TO_BIND}"
-	docker exec -it ckan service nginx start && service apache2 start; 
+	docker exec -it ckan service nginx restart
+	docker exec -it ckan service apache2 restart; 
+}
+
+clean_old_install (){
+	echo "Eliminando instalaciones previas..."
+	echo $CKAN_DI $PG_DI $SOLR_DI | xargs -n 1 | while read img; do docker rm -f $img; done
+	echo "continuando instalacion..."
 }
