@@ -110,7 +110,7 @@ bind_portal(){
 	docker exec -it ckan service nginx restart;	
 }
 
-clean_old_install (){
+clean_old_install () {
 	echo "Eliminando instalaciones previas si existen..."
 	for i in $"$CKAN_DI $PG_DI $SOLR_DI"
 	do
@@ -118,7 +118,7 @@ clean_old_install (){
 		if [ -z "$staus" ];
 			then
 			echo "Eliminando version antigua de $i"
-			do docker rm -f $i	
+			docker rm -f $i	
 		fi
 	done
 	echo "continuando instalacion..."
