@@ -67,6 +67,20 @@ start_ckan-docker (){
 
 }
 
+clean_old_install () {
+	echo "Eliminando instalaciones previas si existen..."
+	CONTAINERS="$CKAN_DI $PG_DI $SOLR_DI"
+	for i in $CONTAINERS
+	do
+		staus=$(docker inspect --format="{{ .State.Status }}" $i 2> /dev/null)
+		if [ -z "$staus" ];
+			then
+			printf "Eliminando version antigua de $i..."
+			[[ docker rm -f $i ]] && printf " [OK]\n" || printf " [FALLO]\n"	
+		fi
+	done
+	echo "continuando instalacion..."
+}
 
 deploy_portal (){
 	# Paso 1: por las dudas elimino los contenedores...
@@ -108,19 +122,4 @@ bind_portal(){
 	docker exec -it ckan /usr/lib/ckan/default/bin/paster --plugin=ckan config-tool /etc/ckan/default/development.ini -e "ckan.datapusher.url = http://${HOST_TO_BIND}:8800" "ckan.site_url = http://${HOST_TO_BIND}"
 	docker exec -it ckan service apache2 restart; 
 	docker exec -it ckan service nginx restart;	
-}
-
-clean_old_install () {
-	echo "Eliminando instalaciones previas si existen..."
-	CONTAINERS="$CKAN_DI $PG_DI $SOLR_DI"
-	for i in $CONTAINERS
-	do
-		staus=$(docker inspect --format="{{ .State.Status }}" $img 2> /dev/null)
-		if [ -z "$staus" ];
-			then
-			printf "Eliminando version antigua de $i..."
-			[[ docker rm -f $i ]] && printf " [OK]\n" || printf " [FALLO]\n"	
-		fi
-	done
-	echo "continuando instalacion..."
 }
