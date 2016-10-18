@@ -28,10 +28,6 @@ if [ "$exit_code" -eq "0" ] ; then
 	service apache2 stop && service nginx stop;
 	service apache2 start && service apache2 reload && service apache2 restart && service nginx restart;
 	
-	# Disponemos logs de CKAN para ser usada mediante docker logs [docker_container_name], en este caso docker logs -f ckan
-	# de esta manera logramos q no finalice el contenedor e incluso, tener una forma rapida de ver los logs.
-	tail -f /var/log/apache2/ckan_default.error.log
-	
 	# Si por alguna razon fallan los logs de CKAN-APACHE, el contenedor seguira vivo y funcional
 	while true; do sleep 1000; done
 
