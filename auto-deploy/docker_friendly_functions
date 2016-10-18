@@ -80,7 +80,7 @@ clean_old_install () {
 #		fi
 #	done
 #	echo "continuando instalacion..."
-echo "$PG_DI $SOLR_DI" | xargs -n 1 | while read img; do docker rm -f $img; done
+echo "$CKAN_DI $PG_DI $SOLR_DI" | xargs -n 1 | while read img; do docker rm -f $img; done
 }
 
 deploy_portal (){
