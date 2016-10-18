@@ -70,7 +70,7 @@ ADD ./scripts $CKAN_INIT
 ADD ./requirements/apache.wsgi $CKAN_CONFIG/apache.wsgi
 ADD ./requirements/datapusher.wsgi /etc/ckan/datapusher.wsgi
 ADD ./config/settings.json $CKAN_DIST_CONF_FOLDER/settings.json
-
+RUN chmod 666  /var/lib/ckan/default/gobar/settings.json
 RUN chmod +x -R $CKAN_INIT/
 RUN chmod 777 -R $CKAN_CONFIG
 
@@ -78,7 +78,7 @@ RUN chmod 777 -R $CKAN_CONFIG
 CMD ["/etc/ckan_init.d/start_ckan.sh"]
 
 # Creo volumenes para las diferentes de CKAN.
-VOLUME $CKAN_CONFIG $CKAN_DATA $    CHAN_HOME
+VOLUME $CKAN_CONFIG $CKAN_DATA $CHAN_HOME
 
 # Abro el puerto de 80(ad) para Apache y el puerto de 8800(dp) apache.datapusher.wsgi
 EXPOSE $CKAN_APACHE2_PORT $CKAN_DATAPUSHER_PORT
