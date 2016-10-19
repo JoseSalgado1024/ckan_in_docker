@@ -6,14 +6,15 @@ MAINTAINER Jose A. Salgado<jose.salgado.wrk@gmail.com>
 #ENV DEBIAN_FRONTEND noninteractive
 ENV CKAN_APACHE2_PORT 80
 ENV CKAN_DATAPUSHER_PORT 8800
-ENV CKAN_CONFIG_FILE development.ini
+ENV CKAN_NGINX_PORT 8080
+ENV CKAN_CONFIG_FILE production.ini
 ENV HOME /root
 ENV CKAN_VERSION 2.5.1  
 ENV CKAN_HOME /usr/lib/ckan/default
 ENV CKAN_CONFIG /etc/ckan/default
 ENV CKAN_DATA /var/lib/ckan
 ENV CKAN_INIT /etc/ckan_init.d
-ENV TERM xterm
+
 # Actualizamos las bases de apt-get!
 RUN apt-get -y update && \
       apt-get install -y software-properties-common && \

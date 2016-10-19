@@ -144,6 +144,6 @@ _Es recomendable clonar el repo dentro de /tmp (o C:\temp en **Windows X**), dad
 		
 		$ docker exec -it ckan \
 			/usr/lib/ckan/default/bin/paster --plugin=ckan sysadmin add ckan_admin \
-			-c /etc/ckan/default/development.ini
+			-c /etc/ckan/default/production.ini
 
 --- 

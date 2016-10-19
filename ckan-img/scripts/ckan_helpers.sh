@@ -128,7 +128,7 @@ publicar_ckan (){
 			HOST_TO_BIND=$1
 	fi
 	service apache2 stop && service nginx stop 
-	/usr/lib/ckan/default/bin/paster --plugin=ckan config-tool /etc/ckan/default/development.ini -e \
+	/usr/lib/ckan/default/bin/paster --plugin=ckan config-tool /etc/ckan/default/production.ini -e \
 		"ckan.datapusher.url = http://${HOST_TO_BIND}:8800" \
 		"ckan.site_url = http://${HOST_TO_BIND}"
 	service apache2 start && service nginx start
