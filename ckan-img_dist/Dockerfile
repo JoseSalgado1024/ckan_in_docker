@@ -14,6 +14,8 @@ ENV CKAN_CONFIG /etc/ckan/default
 ENV CKAN_DATA /var/lib/ckan
 ENV CKAN_INIT /etc/ckan_init.d
 ENV CKAN_DIST_CONF_FOLDER /var/lib/ckan/default/gobar/
+ENV TERM xterm
+
 # Actualizamos las bases de apt-get!
 RUN apt-get -y update && \
       apt-get install -y software-properties-common && \
@@ -78,7 +80,7 @@ RUN chmod 777 -R $CKAN_CONFIG
 CMD ["/etc/ckan_init.d/start_ckan.sh"]
 
 # Creo volumenes para las diferentes de CKAN.
-VOLUME $CKAN_CONFIG $CKAN_DATA $CKAN_HOME
+# VOLUME $CKAN_CONFIG $CKAN_DATA $CKAN_HOME
 
 # Abro el puerto de 80(ad) para Apache y el puerto de 8800(dp) apache.datapusher.wsgi
 EXPOSE $CKAN_APACHE2_PORT $CKAN_DATAPUSHER_PORT
