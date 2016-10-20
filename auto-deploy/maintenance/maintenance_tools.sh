@@ -111,7 +111,7 @@ abort () {
     fi 
     docker exec -it $CKAN_DI service nginx stop
     docker exec -it $CKAN_DI service apache2 stop; 
-    docker exec -it $CKAN_DI /usr/lib/ckan/default/bin/paster --plugin=ckan config-tool /etc/ckan/default/development.ini -e  "ckan.datapusher.url = http://${HOST_TO_BIND}:8800" "ckan.site_url = http://${HOST_TO_BIND}"
+    docker exec -it $CKAN_DI /usr/lib/ckan/default/bin/paster --plugin=ckan config-tool /etc/ckan/default/production.ini -e  "ckan.datapusher.url = http://${HOST_TO_BIND}:8800" "ckan.site_url = http://${HOST_TO_BIND}"
     docker exec -it $CKAN_DI service nginx start
     docker exec -it $CKAN_DI service apache2 start; 
 }
@@ -251,3 +251,5 @@ case $1 in
     .mostrar_ayuda
     ;;  
 esac
+
+E/bin/paster --plugin=ckan sysadmin add ckan_admin -c /etc/ckan/default/production.ini
