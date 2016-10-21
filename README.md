@@ -33,15 +33,15 @@ _Porque SI! :sunglasses:... Nah! esta en la TODO-LIST!_
 ## Con que cuenta esta version de CKAN?
 	
 Features:
-+ CKAN 2.5.2. [Saber más...](http://docs.ckan.org/en/ckan-2.5.2/)
-+ Datastore. [Saber más...](http://docs.ckan.org/en/latest/maintaining/datastore.html)
-+ FileStore. [Saber más...](http://docs.ckan.org/en/latest/maintaining/filestore.html)
-+ Datapusher. [Saber más...](https://github.com/ckan/datapusher)
-+ Hierarchy. [Saber más...](https://github.com/datagovuk/ckanext-hierarchy)
-+ DCAT. [Saber más...](https://github.com/ckan/ckanext-dcat)
-+ Harvest. [Saber más...](https://github.com/ckan/ckanext-harvest)
-+ GobAr-theme. Ver [Demo](http://http://datos.gob.ar/). [Saber más...](https://github.com/gobabiertoAR/datos.gob.ar/blob/master/docs/03_instalacion_tema_visual.md)
-+ Apache2 & NGINX. [Saber más...](http://docs.ckan.org/en/ckan-2.5.2/maintaining/installing/deployment.html#install-apache-modwsgi-modrpaf)
++ CKAN 2.5.2. [+](http://docs.ckan.org/en/ckan-2.5.2/)
++ Datastore. [+](http://docs.ckan.org/en/latest/maintaining/datastore.html)
++ FileStore. [+](http://docs.ckan.org/en/latest/maintaining/filestore.html)
++ Datapusher. [+](https://github.com/ckan/datapusher)
++ Hierarchy. [+](https://github.com/datagovuk/ckanext-hierarchy)
++ DCAT. [+](https://github.com/ckan/ckanext-dcat)
++ Harvest. [+](https://github.com/ckan/ckanext-harvest)
++ GobAr-theme. [Demo](http://http://datos.gob.ar/) | [+](https://github.com/gobabiertoAR/datos.gob.ar/blob/master/docs/03_instalacion_tema_visual.md)
++ Apache2 & NGINX. [+](http://docs.ckan.org/en/ckan-2.5.2/maintaining/installing/deployment.html#install-apache-modwsgi-modrpaf)
 
 
 ## Prerequisitos:
