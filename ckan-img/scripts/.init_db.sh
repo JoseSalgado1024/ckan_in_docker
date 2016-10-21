@@ -1,7 +1,7 @@
 #!/bin/sh
 
 init_db(){
-	${CKAN_HOME}/bin/paster --plugin=ckan db init -c /etc/ckan/default/production.ini
+	${CKAN_HOME}/bin/paster --plugin=ckan db init -c /etc/ckan/defaultp/roduction.ini
 }
 
 init_datastore(){

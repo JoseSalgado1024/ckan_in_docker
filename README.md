@@ -31,18 +31,18 @@ _...Deseas saber mas sobre docker? Genial! Docker posee una documentacion excele
 _Porque SI! :sunglasses:... Nah! esta en la TODO-LIST!_
 
 ## Con que cuenta esta version de CKAN?
-
+	
 Features:
++ CKAN 2.5.2. Mas info [aqui](http://docs.ckan.org/en/ckan-2.5.2/)
++ Datastore.Mas info [aqui](http://docs.ckan.org/en/latest/maintaining/datastore.html)
++ FileStore. Mas info [aqui](http://docs.ckan.org/en/latest/maintaining/filestore.html)
++ Datapusher. Mas info [aqui](https://github.com/ckan/datapusher)
++ Hierarchy. Mas info [aqui](https://github.com/datagovuk/ckanext-hierarchy)
++ DCAT. Mas info [aqui](https://github.com/ckan/ckanext-dcat)
++ Harvest. Mas informacion [aqui](https://github.com/ckan/ckanext-harvest)
++ GobAr-theme. Ver [Demo](http://http://datos.gob.ar/). Mas info [aqui](https://github.com/gobabiertoAR/datos.gob.ar/blob/master/docs/03_instalacion_tema_visual.md)
++ Apache2 & NGINX. mas info [aqui](http://docs.ckan.org/en/ckan-2.5.2/maintaining/installing/deployment.html#install-apache-modwsgi-modrpaf)
 
-+ CKAN 2.6.
-+ Datastore.
-+ FileStore.
-+ Datapusher.
-+ Apache2 & NGINX.
-+ Extensiones:
-	+ CKAN-Hierarchy. Mas informacion [aqui](https://github.com/datagovuk/ckanext-hierarchy)
-	+ CKAN-GobArTheme. Ver [Demo](http://http://datos.gob.ar/). Mas Informacion [aqui](https://github.com/gobabiertoAR/datos.gob.ar/blob/master/docs/03_instalacion_tema_visual.md)
-+ Ckan-tools
 
 ## Prerequisitos:
 

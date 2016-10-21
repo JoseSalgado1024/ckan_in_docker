@@ -81,6 +81,8 @@ link_solr_url () {
   echo "http://${host}:${port}/solr/ckan"
 }
 
+
+
 # If we don't already have a config file, bootstrap
 if [ ! -e "$CONFIG" ]; then
   if [ -z "$DATABASE_URL" ]; then
