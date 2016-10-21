@@ -13,8 +13,8 @@ _El mismo **CKAN** de siempre pero.. bellamente dockerizado...:heart_eyes:_
 + [Instalacion y Ejecucion de CKAN](#instalacion-y-ejecucion-de-ckan)
     + [Instalacion Simplificada de CKAN](#instalacion-simplificada-de-ckan)
     + [Instalacion Avanzada de CKAN](#instalacion-avanzada-de-ckan)
-    	[Sin builder contenedores](#instalacion-de-ckan-con-contenedores-de-docker-ya-buildeados)
-    	[Buildeando contenedores](#instalacion-de-ckan-con-contenedores-de-docker-ya-buildeados)
+    	+ [Sin builder contenedores](#instalacion-de-ckan-con-contenedores-de-docker-ya-buildeados)
+    	+ [Buildeando contenedores](#instalacion-de-ckan-con-contenedores-de-docker-ya-buildeados)
 
 ---
 
