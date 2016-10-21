@@ -13,6 +13,8 @@ _El mismo **CKAN** de siempre pero.. bellamente dockerizado...:heart_eyes:_
 + [Instalacion y Ejecucion de CKAN](#instalacion-y-ejecucion-de-ckan)
     + [Instalacion Simplificada de CKAN](#instalacion-simplificada-de-ckan)
     + [Instalacion Avanzada de CKAN](#instalacion-avanzada-de-ckan)
+    	[Sin builder contenedores](#instalacion-de-ckan-con-contenedores-de-docker-ya-buildeados)
+    	[Buildeando contenedores](#instalacion-de-ckan-con-contenedores-de-docker-ya-buildeados)
 
 ---
 
@@ -97,7 +99,7 @@ _La idea detras de esta implementacion de CKAN, es que **SOLO** te encargues de 
 ---
 
 ### Instalacion Avanzada de CKAN
-+ Instalacion de CKAN con contenedores de Docker ya compilados:
+#### Instalacion de CKAN con contenedores de Docker ya buildeados
 	
 	_Para esta clase de instalacion, no es necesario clonar el repo, dado que usaremos contenedores alojados en [DockerHub](https://hub.docker.com/) y el proceso de instalacion se divide en seis pasos.
 
