@@ -39,15 +39,11 @@ RUN   apt-get -y install \
             ca-certificates \
             git-core
 
-# Bajamos el .deb de ckan
-RUN wget http://packaging.ckan.org/python-ckan_2.5-trusty_amd64.deb -P /tmp
-
 # Instalamos psql
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 RUN apt-get -y update && apt-get -y install pgadmin3
 
-
-RUN mkdir -p $CKAN_HOME $CKAN_CONFIG $CKAN_DATA
+RUN mkdir -p $CKAN_HOME $CKAN_CONFIG $CKAN_DATA /etc/service/ckan /etc/service/postfix /etc/service/nginx
 RUN virtualenv $CKAN_HOME
 RUN ln -s $CKAN_HOME/src/ckan/ckan/config/who.ini $CKAN_CONFIG/who.ini
 RUN chown www-data:www-data $CKAN_DATA
@@ -55,20 +51,23 @@ RUN chmod u+rwx $CKAN_DATA
 RUN touch /tmp/ckan_service.log
 RUN chmod u+rw /tmp/ckan_service.log
 
-# Instalamos CKAN
-RUN dpkg -i /tmp/python-ckan_2.5-trusty_amd64.deb
-
 # Actualizamos pip
 RUN $CKAN_HOME/bin/pip install --upgrade pip
 
 # Instalamos las extensiones de CKAN: GobAR-Theme & Hierarchy 
+RUN $CKAN_HOME/bin/pip install -e "git+https://github.com/ckan/ckan.git@ckan-2.7.0#egg=ckan"
+RUN $CKAN_HOME/bin/pip install -r $CKAN_HOME/src/ckan/requirements.txt
 RUN $CKAN_HOME/bin/pip install -e "git+https://github.com/datosgobar/datos.gob.ar.git#egg=ckanext-gobar_theme"
 RUN $CKAN_HOME/bin/pip install -e "git+https://github.com/datagovuk/ckanext-hierarchy.git#egg=ckanext-hierarchy"
 
-ADD ./requirements/ckan_default.conf /etc/apache2/sites-enabled/ckan_default.conf 
+ADD ./config/ckan_default.conf /etc/apache2/sites-enabled/ckan_default.conf 
 ADD ./scripts $CKAN_INIT
-ADD ./requirements/apache.wsgi $CKAN_CONFIG/apache.wsgi
-ADD ./requirements/datapusher.wsgi /etc/ckan/datapusher.wsgi
+ADD ./config/apache.wsgi $CKAN_CONFIG/apache.wsgi
+ADD ./config/datapusher.wsgi /etc/ckan/datapusher.wsgi
+ADD ./config/ckan_run /etc/service/ckan/run
+ADD ./config/postfix_run /etc/service/postfix/run
+ADD ./config/nginx_run /etc/service/nginx/run
+ADD ./config/docker/svc /etc/service
 RUN chmod +x -R $CKAN_INIT/
 RUN chmod 777 -R $CKAN_CONFIG
 
