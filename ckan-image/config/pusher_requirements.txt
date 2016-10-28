@@ -1,0 +1,7 @@
+ckanserviceprovider==0.0.5
+messytables>=0.12.0
+python-slugify
+Requests
+argparse
+bleach==1.4.3
+html5lib==0.9999999
